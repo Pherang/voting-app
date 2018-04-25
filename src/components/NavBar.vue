@@ -2,10 +2,10 @@
   <div class="navbar">
     <!-- Navigation Links. router-link components -->
     <router-link :to="{name: 'polls'}" exact>Polls</router-link>
-    <router-link :to="{name: 'my-polls'}" exact>MyPolls</div>
+    <router-link :to="{name: 'my-polls'}" exact>MyPolls</router-link>
     <div class="spacer"></div>
-    <router-link :to="{name: 'polls'}" exact>Login
-    <router-link :to="{name: 'polls'}" exact>Logout
+    <router-link :to="{name: 'polls'}" exact>Login</router-link>
+    <router-link :to="{name: 'polls'}" exact>Logout</router-link>
   </div>    
 </template>
 

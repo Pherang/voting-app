@@ -8,6 +8,13 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/', name: 'polls', component: Polls},
-  { path: '/mypolls', name: 'mypolls', component: MyPolls}
+  { path: '/mypolls', name: 'my-polls', component: MyPolls}
 
 ]
+
+const router = new VueRouter({
+  routes,
+  mode: 'history'
+})
+
+export default router

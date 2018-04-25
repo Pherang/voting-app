@@ -6,7 +6,7 @@
     
     <NavBar />
     <!-- Main Content -->
-    <!-- <router-view /> -->
+    <router-view />
     Router View would go here
 
   </div>    
