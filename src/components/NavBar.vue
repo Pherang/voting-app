@@ -4,8 +4,8 @@
     <router-link :to="{name: 'polls'}" exact>Polls</router-link>
     <router-link :to="{name: 'my-polls'}" exact>MyPolls</router-link>
     <div class="spacer"></div>
-    <router-link :to="{name: 'polls'}" exact>Login</router-link>
     <router-link :to="{name: 'polls'}" exact>Logout</router-link>
+    <router-link :to="{name: 'polls'}" exact>Login</router-link>
   </div>    
 </template>
 

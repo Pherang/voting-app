@@ -7,7 +7,6 @@
     <NavBar />
     <!-- Main Content -->
     <router-view />
-    Router View would go here
 
   </div>    
 </template>
