@@ -3,5 +3,5 @@ import AppLayout from './components/AppLayout.vue'
 
 new Vue({
   el: '#app',
-  render: h => h(AppLayout)
+  render: h => h(AppLayout),
 })
