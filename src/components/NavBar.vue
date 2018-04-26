@@ -1,17 +1,24 @@
 <template>
-  <div class="navbar">
+  <nav class="navbar">
     <!-- Navigation Links. router-link components -->
     <router-link :to="{name: 'polls'}" exact>Polls</router-link>
     <router-link :to="{name: 'my-polls'}" exact>MyPolls</router-link>
     <div class="spacer"></div>
-    <router-link :to="{name: 'polls'}" exact>Logout</router-link>
-    <router-link :to="{name: 'polls'}" exact>Login</router-link>
-  </div>    
+    <template v-if="$state.user">
+      <a>{{ $state.user.username }}</a>
+      <a @click="logout">Logout</a>
+    </template>
+    <router-link v-else :to="{name: 'login'}" exact>Login</router-link>
+  </nav>    
 </template>
 
 <script>
 export default {
-
+  methods: {
+    async logout () {
+      console.log('Logout clicked')
+    }
+  }
 }
 </script>
 
