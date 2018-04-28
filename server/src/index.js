@@ -1,10 +1,37 @@
 const express = require('express'),
-      bodyparser = require('bodyparser'),
-      passpport = require('passport')
+      cookieParser = require('cookie-parser'),
+      bodyparser = require('body-parser'),
+      passpport = require('passport'),
+      session = require('express-session'),
+      cors = require('cors'),
+      uuid = require('uuid/v4'),
       MongoClient = require('mongodb').MongoClient,
       app = express()
 
-server_port = process.env.SRV_PORT || 4040
+const SERVER_PORT = process.env.SRV_PORT || 4040
+const SECRET = process.env.SECRET || 'BC3_3hDI4Be-@14Z1!29F'
+
+
+
+// Parse signed cookies
+app.use(cookieParser(SECRET))
+
+app.use(bodyParser.urlencoded({ extended: true}))
+app.use(bodyParser.json())
+
+app.use(session({
+  genid: () => uuid(),
+  secret: SECRET,
+  resave: true,
+  saveUninititalized: true,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 1 // 1 hour cookie
+    secure: process.env.NODE_ENV === 'production' //true if prod
+  },
+}))
+
+app.use(passport.initialize())
+app.use(passport.session()) // Required if using sessions. Also has to appear after initialize and after express-session has been mounted
 
 
 app.get('/', (req,res) => {
@@ -14,5 +41,5 @@ app.get('/', (req,res) => {
 
 })
 
-app.listen(4040)
-console.log('Server running on port', server_port)
+app.listen(SERVER_PORT)
+console.log('Server running on port', SERVER_PORT)
