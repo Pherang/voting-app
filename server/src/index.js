@@ -1,17 +1,16 @@
 const express = require('express'),
       cookieParser = require('cookie-parser'),
-      bodyparser = require('body-parser'),
-      passpport = require('passport'),
+      bodyParser = require('body-parser'),
+      passport = require('passport'),
       session = require('express-session'),
       cors = require('cors'),
       uuid = require('uuid/v4'),
-      MongoClient = require('mongodb').MongoClient,
       app = express()
 
 const SERVER_PORT = process.env.SRV_PORT || 4040
 const SECRET = process.env.SECRET || 'BC3_3hDI4Be-@14Z1!29F'
 
-
+require('./authusr.js')
 
 // Parse signed cookies
 app.use(cookieParser(SECRET))
@@ -23,12 +22,13 @@ app.use(session({
   genid: () => uuid(),
   secret: SECRET,
   resave: true,
-  saveUninititalized: true,
+  saveUninitialized: true,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 1 // 1 hour cookie
+    maxAge: 1000 * 60 * 60 * 1, // 1 hour cookie
     secure: process.env.NODE_ENV === 'production' //true if prod
   },
 }))
+
 
 app.use(passport.initialize())
 app.use(passport.session()) // Required if using sessions. Also has to appear after initialize and after express-session has been mounted
