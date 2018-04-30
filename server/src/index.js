@@ -10,7 +10,7 @@ const express = require('express'),
 const SERVER_PORT = process.env.SRV_PORT || 4040
 const SECRET = process.env.SECRET || 'BC3_3hDI4Be-@14Z1!29F'
 
-require('./authusr.js') // Setup passport
+require('./authsetup.js') // Setup passport
 
 const routes = require('./routes.js')
 

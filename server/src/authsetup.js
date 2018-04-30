@@ -1,7 +1,7 @@
 const passport = require ('passport')
 const LocalStrategy = require ('passport-local').Strategy
 
-console.log("authusr imported")
+console.log("authsetup imported")
 
 
 async function authenticateUser (username, password) {

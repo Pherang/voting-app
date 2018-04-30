@@ -1,4 +1,5 @@
-const passport = require('passport')
+const passport = require('passport'),
+      database = require('./database.js')
 
 
 // Guards against accessing route as null user
@@ -36,10 +37,10 @@ module.exports.addRoutes = function(app) {
     res.send('Login!')
 
   })
-  
+ 
+  // Get polls belonging to authenticated user
   app.get('/mypolls', privateRoute, (req,res) => {
     res.send('Polls created by user')
   })
-
   
 }
