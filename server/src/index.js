@@ -10,7 +10,9 @@ const express = require('express'),
 const SERVER_PORT = process.env.SRV_PORT || 4040
 const SECRET = process.env.SECRET || 'BC3_3hDI4Be-@14Z1!29F'
 
-require('./authusr.js')
+require('./authusr.js') // Setup passport
+
+const routes = require('./routes.js')
 
 // Parse signed cookies
 app.use(cookieParser(SECRET))
@@ -33,13 +35,7 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session()) // Required if using sessions. Also has to appear after initialize and after express-session has been mounted
 
-
-app.get('/', (req,res) => {
-
-  res.send('Hello')
-  res.end()
-
-})
+routes.addRoutes(app)
 
 app.listen(SERVER_PORT)
 console.log('Server running on port', SERVER_PORT)
