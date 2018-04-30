@@ -24,7 +24,7 @@ module.exports.addRoutes = function(app) {
   })
 
   app.get('/polls', (req,res) => {
-
+    database.getPolls()
     res.send('Poll data goes here')
     res.end()
   })
@@ -34,6 +34,7 @@ module.exports.addRoutes = function(app) {
   })
 
   app.get('/login', (req,res) => {
+    database.getUser()
     res.send('Login!')
 
   })
