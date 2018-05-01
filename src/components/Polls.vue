@@ -4,8 +4,10 @@
   <section class="pollslist">
     <!-- Poll Main Content -->
   <div v-if="this.error">Error loading Polls</div>
-  <Poll v-else v-for="poll in polls"> 
-  </Poll>
+  <Poll v-else v-for="poll in polls"
+    :key="poll.id"
+    :poll="poll"
+  ></Poll>
   </div>
   
   </section>

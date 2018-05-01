@@ -13,6 +13,9 @@
 </template>
 
 <script>
+  props: [
+    'post'
+    ]
 export default {
   data () {
     return {
