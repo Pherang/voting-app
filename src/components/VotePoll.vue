@@ -1,5 +1,6 @@
 <template>
   <main>
+  
   <h1>Polls to Vote On</h1>
   <section class="pollslist">
     <!-- Poll Main Content -->
@@ -9,10 +10,10 @@
     <form @submit.prevent="submit">
       <div v-for="answer in poll.answers">
         <input :name="poll._id" type="radio"> {{ answer.option }}</input> Votes: {{ answer.votes }}
+        <button type="submit">
+          Vote
+        </button>
       </div>
-      <button type="submit">
-         Vote
-      </button>
     </form>
   </div>
   
@@ -38,12 +39,6 @@ export default {
       }
     } catch (err){
       this.error = err
-    }
-  },
-  methods: {
-    async submit () {
-      console.log(this.polls[0]._id) 
-      console.log(
     }
   }
 }
