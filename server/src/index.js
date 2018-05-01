@@ -8,21 +8,31 @@ const express = require('express'),
       app = express()
 
 const SERVER_PORT = process.env.SRV_PORT || 4040
-const SECRET = process.env.SECRET || 'BC3_3hDI4Be-@14Z1!29F'
+const SECRET_SIG = process.env.SECRET_SIG || 'BC3_3hDI4Be-@14Z1!29Z'
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:8080'
+
+const corsOptions = {
+  origin: CLIENT_ORIGIN,
+  credentials: true
+}
+
 
 require('./authsetup.js') // Setup passport
 
 const routes = require('./routes.js')
 
+// mount cors middleware
+app.use(cors(corsOptions))
+
 // Parse signed cookies
-app.use(cookieParser(SECRET))
+app.use(cookieParser(SECRET_SIG))
 
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json())
 
 app.use(session({
   genid: () => uuid(),
-  secret: SECRET,
+  secret: SECRET_SIG,
   resave: true,
   saveUninitialized: true,
   cookie: {

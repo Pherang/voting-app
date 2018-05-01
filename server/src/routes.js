@@ -23,9 +23,9 @@ module.exports.addRoutes = function(app) {
     res.json( {status: 'roger'})
   })
 
-  app.get('/polls', (req,res) => {
-    database.getPolls()
-    res.send('Poll data goes here')
+  app.get('/polls', async (req,res) => {
+    let polls = await database.getPolls()
+    res.json(polls)
     res.end()
   })
   
