@@ -1,6 +1,5 @@
 <template>
   <main>
-  
   <h3>Vote </h3>
     <!-- Poll Main Content -->
   <div v-if="this.error">Error loading Polls</div>
@@ -25,18 +24,7 @@ export default {
       error: null
     }
   },
-  async created () {
-    try {
-      const response = await fetch('http://localhost:4040/polls')
-      if (response.ok) {
-        this.polls = await response.json()
-      } else {
-        throw new Error('error')
-      }
-    } catch (err){
-      this.error = err
-    }
-  }
+  
 }
 </script>
 
