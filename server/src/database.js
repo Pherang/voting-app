@@ -25,7 +25,8 @@ MongoClient.connect(uri, async function (err, client) {
   console.log("Connected to DB server")
   
   db = await client.db(dbName) 
-  //initPolls() call this to initialize data if there isn't any
+  // call this to initialize data if there isn't any
+  // initPolls()
 })
 
 async function initPolls () {
@@ -33,33 +34,32 @@ async function initPolls () {
   let poll1 = {
     question : "Red or Blue",
     answers: [  
-      { answer : "red",  votes : 0 }
-      { answer : "blue", votes : 0 }
+      { option : "red",  votes : 0 },
+      { option : "blue", votes : 0 }
     ]
   }
   let poll2 = {
     question : "Peanuts or Almonds?",
     answers: [
-        { answer1 : "peanuts", answer1_votes : 0,
-    answer2 : "almonds",
-    answer2_votes : 0
+        { option : "peanuts", votes : 0},
+        { option : "almonds", votes : 0}
     ]
   }
 
   let poll3 = { 
     question : "Water or Air?",
-    answer1 : "water",
-    answer1_votes : 0,
-    answer2 : "air",
-    answer2_votes : 10
+    answers: [
+      { option : "water",votes : 0 },
+      { option : "air",votes : 10}
+    ]
   }
   
-  let poll3 = { 
+  let poll4 = { 
     question : "How many hours do you sleep?",
-    answer1 : "8 hours",
-    answer1_votes : 0,
-    answer2 : "6 hours",
-    answer2_votes : 10
+    answers: [
+      { option : "8 hours",votes : 0 },
+      { option : "6 hours",votes : 10 }
+    ]
   }
 
   try {

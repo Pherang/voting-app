@@ -7,8 +7,11 @@
   <div v-if="this.error">Error loading Polls</div>
   <div v-else v-for="poll in polls"> 
     <h2 v-html="poll.question"></h2>
-    <div>{{ poll.answer1 }} {{ poll.answer1_votes }}</div>
-    <div>{{ poll.answer2 }} {{ poll.answer2_votes }}</div>
+    <div v-for="answer in poll.answers">
+      <form>
+      <input type="radio"> {{ answer.option }}</input> Votes: {{ answer.votes }}
+      </form>
+    </div>
   </div>
   
   </section>
@@ -46,5 +49,6 @@ h1 {
 .pollslist {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 </style>
