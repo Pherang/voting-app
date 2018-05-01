@@ -75,7 +75,7 @@ exports.getPolls = async function getPolls () {
   try { 
     let query = {}
     let allPollsCursor = await db.collection(polls).find(query)
-    allPollsCursor.project({ _id: 0, creator: 0})
+    allPollsCursor.project({ creator: 0})
     return (await allPollsCursor.toArray())
   } catch (err) {
     console.log(err.stack)
@@ -88,7 +88,7 @@ exports.getUserPolls = async function getUserPolls (user) {
   try {
     let query = { creator: user._id }
     let allPollsCursor = await db.collection(polls).find(query)
-    allPollsCursor.project({ _id: 0, creator: 0})
+    allPollsCursor.project({ creator: 0})
     return (await allPollsCursor.toArray())
   } catch (err) {
     console.log(err.stack)

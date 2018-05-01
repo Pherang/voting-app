@@ -7,11 +7,14 @@
   <div v-if="this.error">Error loading Polls</div>
   <div v-else v-for="poll in polls"> 
     <h2 v-html="poll.question"></h2>
-    <div v-for="answer in poll.answers">
-      <form>
-      <input type="radio"> {{ answer.option }}</input> Votes: {{ answer.votes }}
-      </form>
-    </div>
+    <form @submit.prevent="submit">
+      <div v-for="answer in poll.answers">
+        <input :name="poll._id" type="radio"> {{ answer.option }}</input> Votes: {{ answer.votes }}
+        <button type="submit">
+          Vote
+        </button>
+      </div>
+    </form>
   </div>
   
   </section>
