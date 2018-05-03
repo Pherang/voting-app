@@ -14,7 +14,7 @@
 
 <script>
   props: [
-    'post'
+    'poll'
     ]
 export default {
   data () {

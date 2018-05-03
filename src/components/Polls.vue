@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Poll from './Poll'
+import Poll from './Poll.vue'
 
 export default {
   data () {
@@ -39,8 +39,10 @@ export default {
   methods: {
     async submit () {
       console.log(this.polls[0]._id) 
-      console.log(
     }
+  },
+  components: {
+    Poll
   }
 }
 </script>
