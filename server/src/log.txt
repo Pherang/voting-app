@@ -1,0 +1,34 @@
+[33m[nodemon] 1.17.3[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching: *.*[39m
+[32m[nodemon] starting `node index.js`[39m
+authsetup imported
+Server running on port 4040
+Connected to DB server
+{}
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node index.js`[39m
+authsetup imported
+Server running on port 4040
+Connected to DB server
+undefined
+[32m[nodemon] starting `node index.js`[39m
+authsetup imported
+Server running on port 4040
+Connected to DB server
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node index.js`[39m
+authsetup imported
+Server running on port 4040
+Connected to DB server
+undefined
+undefined
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node index.js`[39m
+authsetup imported
+Server running on port 4040
+Connected to DB server
+{ pollid: '5ae7e10668fc7d729e68ac89', option: '6 hours' }
+{ pollid: '5ae7e10668fc7d729e68ac89', option: '6 hours' }
+{ pollid: '5ae7e01fa2c7ad722fc9ca41', option: 'blue' }
+{ pollid: '5ae7e01fa2c7ad722fc9ca43', option: 'air' }

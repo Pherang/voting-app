@@ -34,16 +34,18 @@ export default {
       try {
         const result = await fetch('http://localhost:4040/vote', {
          method: 'POST',
+         headers: {
+          'Content-Type': 'application/json'
+         },
          body: JSON.stringify( {
             pollid: this.poll._id,
             option: this.option
          })
         })
-        console.log(this.poll._id)
-        console.log(this.option)
 
-        if (response.ok) {
-          this.poll = await response.json()
+        if (result.ok) {
+          let okMsg = await result.json()
+          console.log(okMsg)
         } else {
           throw new Error('error')
         }
