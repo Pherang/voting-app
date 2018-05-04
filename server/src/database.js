@@ -106,9 +106,10 @@ exports.createPoll = async function createPoll (poll) {
 }
 
 // Update will have to increment whatever option user chose
-exports.updatePoll = async function updatePoll (poll) {
+exports.updatePoll = async function submitVote (poll) {
   try {
-    let result = await db.collection(polls).updateOne(poll)
+    //let result = await db.collection(polls).updateOne(poll)
+    return "Fake OK"
     console.log(result)
   } catch (err) {
     console.log(err.stack)

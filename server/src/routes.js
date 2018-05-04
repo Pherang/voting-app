@@ -28,6 +28,14 @@ module.exports.addRoutes = function(app) {
     res.json(polls)
     res.end()
   })
+
+  app.post('/vote', async (req,res) => {
+    console.log(req.body)
+    let result = await database.submitVote()
+    res.json(result)
+    res.end()
+
+  })
   
   app.get('/signup', (req,res) => {
     res.send('Sign up!')

@@ -36,11 +36,6 @@ export default {
       this.error = err
     }
   },
-  methods: {
-    async submit () {
-      console.log(this.polls[0]._id) 
-    }
-  },
   components: {
     Poll
   }
