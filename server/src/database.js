@@ -1,8 +1,8 @@
 const MongoClient = require('mongodb').MongoClient,
+      ObjectId = require('mongodb').ObjectId
       assert = require('assert')
       PORT = process.env.PORT || 3000
-      
-let uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/votingapp'
+      let uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/votingapp'
 //
 // Use when deploying to heroku 
 // let dbName = 'heroku_something'
@@ -108,11 +108,20 @@ exports.createPoll = async function createPoll (poll) {
 // Update will have to increment whatever option user chose
 exports.submitVote = async function submitVote (poll) {
   try {
-    //let result = await db.collection(polls).updateOne(poll)
-    return "Fake OK"
-    console.log(result)
+    // Need to convert _id to mongo ObjectId for query
+    objId = new ObjectId(poll.pollid)
+
+    let filter = { _id:objId }
+    let update = { $set: { question: "Red or blue"}}
+    let result = await db.collection(polls).updateOne( filter, update )
+    //let answer = await cursor.next()
+    if (result.modifiedCount > 0) {
+      console.log('Poll updated')
+    } else {
+      console.log('No poll found')
+    }
   } catch (err) {
-    console.log(err.stack)
+    console.log("ERROR: ", err)
   }
 }
 

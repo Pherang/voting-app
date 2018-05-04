@@ -30,9 +30,10 @@ module.exports.addRoutes = function(app) {
   })
 
   app.post('/vote', async (req,res) => {
-    console.log(req.body)
-    let result = await database.submitVote()
-    res.json(result)
+    // Parse body for vote selection
+    let vote = req.body
+    let result = await database.submitVote(vote)
+    res.send('OK')
     res.end()
 
   })

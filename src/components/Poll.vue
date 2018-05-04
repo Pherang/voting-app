@@ -44,8 +44,7 @@ export default {
         })
 
         if (result.ok) {
-          let okMsg = await result.json()
-          console.log(okMsg)
+          console.log('Vote submitted')
         } else {
           throw new Error('error')
         }
