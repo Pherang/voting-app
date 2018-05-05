@@ -3,21 +3,45 @@
     <!-- Login Main Content -->
     <form @submit.prevent="submit">
       <h2>{{ title }}</h2>
-      <input type="text" name="username" v-model="username" placeholder="Username"></input><br>
+      <input 
+        type="text" 
+        name="username" 
+        v-model="username" 
+        placeholder="Username" /><br>
       <template v-if="mode === 'signup'">
-      <input type="text" name="email" v-model="email" placeholder="Email"></input><br>
+        <input 
+          type="text"
+          name="email"
+          v-model="email"
+          placeholder="Email" /><br>
       </template>
-        <input type="password" name="password" v-model="password" placeholder="Password"></input><br>
+      <input
+        type="password"
+        name="password"
+        v-model="password"
+        placeholder="Password" /><br>
       <template v-if="mode === 'signup'">
-        <input type="password" name="password2" v-model="password2" placeholder="Confirm Password"></input><br>
+        <input
+          type="password"
+          name="password2"
+          v-model="password2"
+          placeholder="Confirm Password" /><br>
       </template>
       <br>
       <template v-if="mode ==='login'">
-        <button type="button" @click="mode ='signup'">Create Account</button>
-        <button type="submit">Login</button>
+        <button
+          type="button"
+          @click="mode ='signup'">
+          Create Account
+        </button>
+        <button type="submit" :disabled="!validLogin" >Login</button>
       </template>
       <template v-if="mode ==='signup'">
-        <button type="button" @click="mode ='login'">Login to Account </button>
+        <button
+          type="button"
+          @click="mode ='login'">
+          Log in
+        </button>
         <button type="submit">Signup</button>
       </template>
     </form>
@@ -41,13 +65,39 @@ export default {
         case 'login': return 'Login'
         case 'signup': return 'Create an account'
       }
+    },
+    validLogin () {
+      return (this.username && this.password)
+    },
+    validNewPassword () {
+      return (this.password === this.password2)
+    },
+    validEmail () {
+      this.email.  
+    },
+    validSignup () {
+      // A valid signup is passwords that match
+      // A user name
+      // An email
+      
     }
   },
   methods: {
     async submit () {
-      console.log('Logging in...')
+      if (this.mode === 'signup') {
+        await this.signup()
+      }
+      if (this.mode === 'login') {
+        await this.login()
+      }
+    },
+    async signup () {
+      console.log('Signing up')
+    },
+    async login () {
+      console.log('Loggin in')
     }
-  }
+  },
 }
 </script>
 
