@@ -11,8 +11,7 @@
       <template v-if="mode === 'signup'">
         <input 
           type="text"
-          name="email"
-          v-model="email"
+          name="email" v-model="email"
           placeholder="Email" /><span v-if="!validEmail"> Please enter a valid email addres</span> <br>
       </template>
       <input
@@ -113,6 +112,7 @@ export default {
           password: this.password
         })
       })
+      console.log('Signup status: ', await result.json())
     },
     async login () {
       console.log('Loggin in')

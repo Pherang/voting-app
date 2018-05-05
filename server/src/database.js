@@ -1,5 +1,6 @@
 const MongoClient = require('mongodb').MongoClient,
       ObjectId = require('mongodb').ObjectId
+      User = require('./users.js')
       assert = require('assert')
       PORT = process.env.PORT || 3000
       let uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/votingapp'
@@ -55,8 +56,7 @@ async function initPolls () {
   }
   
   let poll4 = { 
-    question : "How many hours do you sleep?",
-    answers: [
+    question : "How many hours do you sleep?", answers: [
       { option : "8 hours",votes : 0 },
       { option : "6 hours",votes : 10 }
     ]
@@ -127,23 +127,39 @@ exports.submitVote = async function submitVote (poll) {
   }
 }
 
-exports.getUser = async function getUser () {
+exports.getUser = async function getUser (username) {
   try {
-    let user = await db.collection(users).findOne()
-    console.log(user)
+    let result = await db.collection(users).findOne({ username: username})
+    console.log(result)
+    return result
   } catch (err) {
     console.log(err.stack)
+    return err
   }
 }
 
 exports.createUser = async function createUser (user) {
   try {
-     if(getUser(user)) {
-      return ('Username already exists. Please choose another') 
-     }
-
-    let result = await db.collection(users).insertOne(user)
-    console.log(result)
+    // this and module.exports refer to the same object
+    // if I understand right this module is wrapped in a function 
+    // the function is the global content that this refers to
+    let existingUser = await this.getUser(user.username)
+    console.log('I found user: ', existingUser)
+    if (existingUser) {
+      return ('Username exists please try another')
+    } else {
+      let hashedPassword = await User.hashPassword(user.password)
+      user.password = hashedPassword
+      console.log('User object is: ', user)
+      let result = await db.collection(users).insertOne(user)
+      if (result.insertedCount == 1) {
+        console.log('Success')
+        return result.insertedCount
+      } else {
+        console.log('Error inserting user: ', user.username)
+        return 'Error creating user'
+      }
+    }
   } catch (err) {
     console.log(err.stack)
   }

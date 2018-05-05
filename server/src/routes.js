@@ -1,7 +1,6 @@
 const passport = require('passport'),
       database = require('./database.js')
 
-
 // Guards against accessing route as null user
 function privateRoute (req, res, next) {
   if (!req.user) {
@@ -38,18 +37,20 @@ module.exports.addRoutes = function(app) {
 
   })
   
-  app.get('/signup', (req,res) => {
-    res.send('Sign up!')
+  app.post('/signup', async (req,res) => {
+    console.log(req.body)
+    let result = await database.createUser(req.body)
+    console.log('Route result is: ',result)
+    res.json(result)
   })
 
-  app.get('/login', (req,res) => {
-    database.getUser()
-    res.send('Login!')
-
+  app.post('/login', async (req,res) => {
+    console.log(req.body)
+    // database.getUser()
   })
  
   // Get polls belonging to authenticated user
-  app.get('/mypolls', privateRoute, (req,res) => {
+  app.get('/mypolls', privateRoute, async (req,res) => {
     res.send('Polls created by user')
   })
   
