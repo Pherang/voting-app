@@ -10,7 +10,8 @@
             name="poll._id" type="radio" :value="answer.option" v-model="option"> {{ answer.option }}
           </input> Votes: {{ answer.votes }}
         </div>
-        <button type="submit">
+        <div v-if="this.voted">Thanks for Voting!</div>
+        <button v-else type="submit">
           Submit Vote
         </button>
       </form>
@@ -26,6 +27,7 @@ export default {
   data () {
     return {
       option: '',
+      voted: false,
       error: null
     }
   },
@@ -45,6 +47,7 @@ export default {
 
         if (result.ok) {
           console.log('Vote submitted')
+          this.voted = true;
         } else {
           throw new Error('error')
         }
