@@ -110,15 +110,17 @@ exports.submitVote = async function submitVote (poll) {
   try {
     // Need to convert _id to mongo ObjectId for query
     objId = new ObjectId(poll.pollid)
-
-    let filter = { _id:objId }
-    let update = { $set: { question: "Red or blue"}}
+    
+    // answers.option allows us to filter an array element to update.
+    // The $ represents the first element that matches the filter.
+    let filter = { _id:objId, "answers.option": poll.option }
+    let update = { $inc: { "answers.$.votes": 1}}
     let result = await db.collection(polls).updateOne( filter, update )
-    //let answer = await cursor.next()
+
     if (result.modifiedCount > 0) {
       console.log('Poll updated')
     } else {
-      console.log('No poll found')
+      console.log('No update done')
     }
   } catch (err) {
     console.log("ERROR: ", err)
