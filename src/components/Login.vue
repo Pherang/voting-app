@@ -13,7 +13,7 @@
           type="text"
           name="email"
           v-model="email"
-          placeholder="Email" /><br>
+          placeholder="Email" /><span v-if="!validEmail"> Please enter a valid email addres</span> <br>
       </template>
       <input
         type="password"
@@ -42,7 +42,7 @@
           @click="mode ='login'">
           Log in
         </button>
-        <button type="submit">Signup</button>
+        <button type="submit" :disabled="!validSignup">Signup</button>
       </template>
     </form>
   </div>    
@@ -67,19 +67,27 @@ export default {
       }
     },
     validLogin () {
-      return (this.username && this.password)
+      return (!!this.username && !!this.password)
     },
     validNewPassword () {
-      return (this.password === this.password2)
+      if (this.password !== '') {
+        return (this.password === this.password2)
+      }
     },
     validEmail () {
-      this.email.  
+      let regexEmail = /(\w+)\@(\w+)([\.-]\w+)+$/
+      console.log(regexEmail.test(this.email))
+      return regexEmail.test(this.email)
+    },
+    validUsername () {
+      // TODO
+      return true
     },
     validSignup () {
       // A valid signup is passwords that match
       // A user name
       // An email
-      
+      return (this.validNewPassword && this.validEmail && this.validUsername)
     }
   },
   methods: {
@@ -93,14 +101,35 @@ export default {
     },
     async signup () {
       console.log('Signing up')
+      // Need to call fetch and send username, email, password
+      let result = await fetch('http://localhost:4040/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify( {
+          username: this.username,
+          email: this.email,
+          password: this.password
+        })
+      })
     },
     async login () {
       console.log('Loggin in')
+        let result = await fetch('http://localhost:4040/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify( {
+          username: this.username,
+          password: this.password
+        })
+      })
     }
   },
 }
 </script>
-
 
 <style scoped>
 
