@@ -44,9 +44,8 @@ module.exports.addRoutes = function(app) {
     res.json(result)
   })
 
-  app.post('/login', async (req,res) => {
-    console.log(req.body)
-    // database.getUser()
+  app.post('/login', passport.authenticate('local'), async (req,res) => {
+    console.log('This means authenticate passed')
   })
  
   // Get polls belonging to authenticated user

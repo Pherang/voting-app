@@ -8,5 +8,7 @@ exports.hashPassword = async function hashPassword (password) {
 }
 
 exports.checkPassword = async function checkPassword (user, password) {
-  return await bcrypt.compare(user.password, password)
+  // Order matters. first argument is input
+  // second argument is encrypted data
+  return await bcrypt.compare(password, user.password)
 }

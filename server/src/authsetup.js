@@ -1,22 +1,30 @@
 const passport = require ('passport')
 const LocalStrategy = require ('passport-local').Strategy
+const database = require('./database.js')
+const users = require('./users.js')
 
 console.log("authsetup imported")
 
-
 async function authenticateUser (username, password) {
-
-    // TODO
-
-
-
+  const user = await database.getUser(username)
+  let validPassword = false
+  if (user) {
+    validPassword = await users.checkPassword(user, password)
+    console.log('Is it valid?', validPassword)
+  }
+  return {
+    validPassword,
+    user
+  }
 }
 
 // Setup authentication strategy. This must be done before initializing passport.
 passport.use('local', new LocalStrategy(
   async (username, password, done) => {
-    const { valid, user } = await authenticateUser(username, password)
-    if (valid) {
+    // Uses object deconstruction
+    const { validPassword, user } = await authenticateUser(username, password)
+    console.log(user)
+    if (validPassword) {
       return done(null, user)
     } else {
       return done('Incorrect username or password')
