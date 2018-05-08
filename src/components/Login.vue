@@ -51,7 +51,7 @@
 export default {
   data () {
     return {
-      mode: 'signup',
+      mode: 'login',
       username: '',
       email: '',
       password: '',
@@ -75,7 +75,6 @@ export default {
     },
     validEmail () {
       let regexEmail = /(\w+)\@(\w+)([\.-]\w+)+$/
-      console.log(regexEmail.test(this.email))
       return regexEmail.test(this.email)
     },
     validUsername () {
@@ -117,16 +116,29 @@ export default {
     async login () {
       console.log('Loggin in')
         let result = await fetch('http://localhost:4040/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify( {
-          username: this.username,
-          password: this.password
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify( {
+            username: this.username,
+            password: this.password
+          })
         })
-      })
-    }
+
+        console.log(result.status)
+        switch (result.status) {
+          case 200: 
+            this.$state.user = await result.json()
+            this.$router.replace({ name: 'polls'})
+            break
+          case 401: 
+            alert('Username or password incorrect')
+            break
+          default: 
+            alert('Please report error: ' + result.status)
+        }
+      }
   },
 }
 </script>

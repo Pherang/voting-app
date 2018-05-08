@@ -19,7 +19,7 @@ module.exports.addRoutes = function(app) {
 
   app.get('/logout', (req,res) => {
     req.logout()
-    res.json( {status: 'roger'})
+    res.json({status: 'roger'})
   })
 
   app.get('/polls', async (req,res) => {
@@ -46,6 +46,12 @@ module.exports.addRoutes = function(app) {
 
   app.post('/login', passport.authenticate('local'), async (req,res) => {
     console.log('This means authenticate passed')
+    console.log('Returning user id ', req.user._id)
+
+    res.json({
+      _id: req.user._id,
+      username: req.user.username
+    })
   })
  
   // Get polls belonging to authenticated user

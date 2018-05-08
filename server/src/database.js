@@ -129,7 +129,21 @@ exports.submitVote = async function submitVote (poll) {
 
 exports.getUser = async function getUser (username) {
   try {
-    let result = await db.collection(users).findOne({ username: username})
+    let result = await db.collection(users)
+      .findOne({ username: username})
+    console.log(result)
+    return result
+  } catch (err) {
+    console.log(err.stack)
+    return err
+  }
+}
+
+exports.getUserById = async function getUserById (id) {
+  try {
+    const objId = new ObjectId(id)
+    let result = await db.collection(users)
+      .findOne({ _id: objId })
     console.log(result)
     return result
   } catch (err) {

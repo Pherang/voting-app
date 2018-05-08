@@ -5,7 +5,7 @@
     <router-link :to="{name: 'my-polls'}" exact>MyPolls</router-link>
     <div class="spacer"></div>
     <template v-if="$state.user">
-      <a>{{ $state.user.username }}</a>
+      <a>{{ $state.user.username }} </a>&nbsp;
       <a @click="logout">Logout</a>
     </template>
     <router-link v-else :to="{name: 'login'}" exact>Login</router-link>
@@ -16,7 +16,13 @@
 export default {
   methods: {
     async logout () {
+      const result = await fetch('http://localhost:4040/logout')
       console.log('Logout clicked')
+      let x = await result.json()
+      if (x.status  === 'roger') {
+        this.$state.user = null
+        console.log('This should work')
+      }
     }
   }
 }

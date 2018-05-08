@@ -23,11 +23,12 @@ passport.use('local', new LocalStrategy(
   async (username, password, done) => {
     // Uses object deconstruction
     const { validPassword, user } = await authenticateUser(username, password)
-    console.log(user)
+
     if (validPassword) {
+      console.log('Sending user from passport strategy ', user)
       return done(null, user)
     } else {
-      return done('Incorrect username or password')
+      return done(null, false)
     }
   }
 ))
@@ -41,7 +42,7 @@ passport.serializeUser(
 
 passport.deserializeUser(
   async (id, done) => {
-    const user = await console.log("deserialize")
+    const user = await database.getUserById(id)
     const err = !user ? new Error('User not found') : null //sets session to null
     done(err, user || null)
   }
