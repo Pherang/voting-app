@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Polls from './components/Polls.vue'
 import MyPolls from './components/MyPolls.vue'
+import MyPollsLayout from './components/MyPollsLayout.vue'
+import CreatePoll from './components/CreatePoll.vue'
 import Login from './components/Login.vue'
 import state from './state'
 
@@ -11,8 +13,20 @@ Vue.use(VueRouter)
 const routes = [
   { path: '/', name: 'polls', component: Polls},
   { path: '/login', name: 'login', component: Login},
-  { path: '/mypolls', name: 'my-polls', component: MyPolls, 
-    meta: { requireAuth : true } }
+  { path: '/pollcenter', component: MyPollsLayout, 
+    meta: { requireAuth : true }, 
+    children: [
+      {
+        path: 'mypolls',
+        name: 'my-polls',
+        component: MyPolls
+      },
+      {
+        path: 'createpoll',
+        name: 'create-poll',
+        component: CreatePoll
+      }
+    ]}
 ]
 
 const router = new VueRouter({
