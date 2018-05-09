@@ -68,8 +68,11 @@ module.exports.addRoutes = function(app) {
   })
  
   // Get polls belonging to authenticated user
-  app.get('/mypolls', privateRoute, async (req,res) => {
-    res.send('Polls created by user')
+  app.get('/mypolls', privateRoute, 
+    async (req,res) => {
+      let mypolls = await database.getUserPolls(req.user) 
+      console.log(mypolls)
+      res.json(mypolls)
   })
   
 }

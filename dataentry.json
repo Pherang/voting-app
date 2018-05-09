@@ -1,0 +1,15 @@
+{
+
+        "creator": "5aee231117833927631c2cc5"
+	"question" : "DC or Marvel",
+	"answers" : [
+		{
+			"option" : "DC",
+			"votes" : 0
+		},
+		{
+			"option" : "Marvel",
+			"votes" : 0
+		}
+	]
+}

@@ -86,7 +86,9 @@ exports.getPolls = async function getPolls () {
 // Defaulting to all if none specified...
 exports.getUserPolls = async function getUserPolls (user) {
   try {
-    let query = { creator: user._id }
+    // Used template literal for user._id. It must be a string
+    let query = { creator: `${user._id}` }
+    console.log('query for userpolls is', query)
     let allPollsCursor = await db.collection(polls).find(query)
     allPollsCursor.project({ creator: 0})
     return (await allPollsCursor.toArray())
