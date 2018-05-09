@@ -21,6 +21,7 @@ export default {
       let x = await result.json()
       if (x.status  === 'roger') {
         this.$state.user = null
+        this.$router.replace( { name: 'polls'})
         console.log('This should work')
       }
     }

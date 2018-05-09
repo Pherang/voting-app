@@ -1,17 +1,58 @@
 <template>
-  <div>
-
-    <!-- Users Polls Content -->
-    Show the polls created by the logged in user.
-
-  </div>    
+  <main>
+  <h1>Polls to Vote On</h1>
+  <section class="pollslist">
+    <!-- Poll Main Content -->
+  <div v-if="this.error">Error loading Polls</div>
+  <!-- <Poll v-else v-for="poll in polls"
+    :key="poll.id"
+    :poll="poll"
+    ></Poll>-->
+    Created Polls here should not be accessible unless logged in
+  </div>
+  
+  </section>
+  </main>    
 </template>
 
 <script>
-export default {
+import Poll from './Poll.vue'
 
+export default {
+  data () {
+    return {
+      polls: [],
+      error: null
+    }
+  },
+  async created () {
+    try {
+      const response = await fetch('http://localhost:4040/polls', {
+          'credentials': 'include'
+        })
+      if (response.ok) {
+        this.polls = await response.json()
+      } else {
+        throw new Error('error')
+      }
+    } catch (err){
+      this.error = err
+    }
+  },
+  components: {
+    Poll
+  }
 }
 </script>
 
-<style>
+<style scoped>
+
+h1 {
+  text-align: center;
+}
+.pollslist {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
 </style>
