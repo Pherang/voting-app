@@ -26,7 +26,9 @@ export default {
   },
   async created () {
     try {
-      const response = await fetch('http://localhost:4040/polls')
+      const response = await fetch('http://localhost:4040/polls', {
+          'credentials': 'include'
+        })
       if (response.ok) {
         this.polls = await response.json()
       } else {

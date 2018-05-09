@@ -36,13 +36,18 @@ passport.use('local', new LocalStrategy(
 // serializeUser needs to be setup because we're using sessions to store user state.
 passport.serializeUser(
   (user, done) => {
+    console.log(this)
+    console.log('Serializing user')
+    console.log(user._id)
     done(null, user._id)
   }
 )
 
 passport.deserializeUser(
   async (id, done) => {
+    console.log('Deserializing user ', id)
     const user = await database.getUserById(id)
+    console.log(user)
     const err = !user ? new Error('User not found') : null //sets session to null
     done(err, user || null)
   }

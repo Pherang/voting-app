@@ -144,7 +144,7 @@ exports.getUserById = async function getUserById (id) {
     const objId = new ObjectId(id)
     let result = await db.collection(users)
       .findOne({ _id: objId })
-    console.log(result)
+    console.log('database deserialize ', result)
     return result
   } catch (err) {
     console.log(err.stack)

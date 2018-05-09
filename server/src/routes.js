@@ -16,11 +16,25 @@ module.exports.addRoutes = function(app) {
     res.send('Vote on things!')
     res.end()
   })
-
+  
   app.get('/logout', (req,res) => {
     req.logout()
     res.json({status: 'roger'})
   })
+
+  app.get('/getUser', (req,res) => {
+    console.log('Getting session ', req.session)
+    console.log('Getting user ', req.user)
+    if (req.user) {
+      console.log("session logged in")
+      console.log(req.user)
+      res.json({ _id: req.user._id, username: req.user.username }) 
+    } else {
+      console.log('Sending no user')
+      res.send('null')
+    }
+  })
+    
 
   app.get('/polls', async (req,res) => {
     let polls = await database.getPolls()
@@ -46,8 +60,7 @@ module.exports.addRoutes = function(app) {
 
   app.post('/login', passport.authenticate('local'), async (req,res) => {
     console.log('This means authenticate passed')
-    console.log('Returning user id ', req.user._id)
-
+    console.log('Login session looks like\n ', req.session)
     res.json({
       _id: req.user._id,
       username: req.user.username

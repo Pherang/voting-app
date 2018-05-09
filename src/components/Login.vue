@@ -118,8 +118,9 @@ export default {
         let result = await fetch('http://localhost:4040/login', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
+          'credentials': 'include',
           body: JSON.stringify( {
             username: this.username,
             password: this.password
@@ -130,6 +131,7 @@ export default {
         switch (result.status) {
           case 200: 
             this.$state.user = await result.json()
+            console.log("Allo ", this.$state.user)
             this.$router.replace({ name: 'polls'})
             break
           case 401: 
