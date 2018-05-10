@@ -1,11 +1,12 @@
 <template>
   <main>
-    <h1>My Polls</h1>
-    <router-view />
+    <h1>Poll Center</h1>
+
     <div>
       <router-link :to="{name: 'my-polls'}" tag="button" exact>My Polls</router-link>
       <router-link :to="{name: 'create-poll'}" tag="button" exact>Create</router-link>
     </div>
+    <router-view />
   </main>    
 </template>
 

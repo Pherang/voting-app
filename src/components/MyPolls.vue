@@ -3,8 +3,7 @@
   <h1>My Polls</h1>
   <section class="pollslist">
     <!-- Poll Main Content -->
-  <div v-if="this.error">Error loading Polls</div>
-    <Poll v-else v-for="poll in mypolls"
+  <div v-if="this.error">Error loading Polls</div> <Poll v-else v-for="poll in mypolls"
     :key="poll.id"
     :poll="poll"
     ></Poll>
@@ -51,7 +50,7 @@ h1 {
 }
 .pollslist {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   flex-wrap: wrap;
 }
 </style>

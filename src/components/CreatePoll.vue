@@ -1,22 +1,8 @@
 <template>
   <main>
-  
-  <h1>Polls to Vote On</h1>
-  <section class="pollslist">
-    <!-- Poll Main Content -->
-  <div v-if="this.error">Error loading Polls</div>
-  <div v-else v-for="poll in polls"> 
-    <h2 v-html="poll.question"></h2>
-    <form @submit.prevent="submit">
-      <div v-for="answer in poll.answers">
-        <input :name="poll._id" type="radio"> {{ answer.option }}</input> Votes: {{ answer.votes }}
-        <button type="submit">
-          Vote
-        </button>
-      </div>
-    </form>
-  </div>
-  
+  <h1>Create a Poll</h1>
+  <section>
+   
   </section>
   </main>    
 </template>
@@ -25,20 +11,7 @@
 export default {
   data () {
     return {
-      polls: [],
       error: null
-    }
-  },
-  async created () {
-    try {
-      const response = await fetch('http://localhost:4040/polls')
-      if (response.ok) {
-        this.polls = await response.json()
-      } else {
-        throw new Error('error')
-      }
-    } catch (err){
-      this.error = err
     }
   }
 }
