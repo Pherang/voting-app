@@ -102,9 +102,11 @@ exports.createPoll = async function createPoll (poll) {
    
     console.log('Poll with votes init ', poll)
     console.log('poll arr ', poll.answers)
+    // Zero the votes for a newly created poll
     for (element in poll.answers) {
-      console.log(JSON.stringify(element))
+      poll.answers[element].votes = 0
     }
+    console.log('poll after modify ', poll.answers)
     let result = await db.collection(polls).insertOne(poll)
     return result  
   } catch (err) {
