@@ -132,7 +132,7 @@ export default {
           case 200: 
             this.$state.user = await result.json()
             console.log("Allo ", this.$state.user)
-            this.$router.replace({ name: 'polls'})
+            this.$router.replace({ path: '/pollcenter'})
             break
           case 401: 
             alert('Username or password incorrect')

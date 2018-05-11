@@ -28,13 +28,15 @@ module.exports.addRoutes = function(app) {
     if (req.user) {
       console.log("session logged in")
       console.log(req.user)
-      res.json({ _id: req.user._id, username: req.user.username }) 
+      res.json({ 
+        _id: req.user._id,
+        username: req.user.username 
+      }) 
     } else {
       console.log('Sending no user')
       res.send('null')
     }
   })
-    
 
   app.get('/polls', async (req,res) => {
     let polls = await database.getPolls()
@@ -48,7 +50,6 @@ module.exports.addRoutes = function(app) {
     let result = await database.submitVote(vote)
     res.send('OK')
     res.end()
-
   })
   
   app.post('/signup', async (req,res) => {
@@ -75,4 +76,12 @@ module.exports.addRoutes = function(app) {
       res.json(mypolls)
   })
   
+  app.post('/createpoll', privateRoute, 
+    async (req,res) => {
+      console.log('New Poll ', req.body)
+      console.log('Creator ', req.body.creator)
+      console.log('Requestor ', req.user)
+      let result = await database.createPoll(req.body) 
+      res.json(result)
+  })
 }

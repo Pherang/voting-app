@@ -99,8 +99,13 @@ exports.getUserPolls = async function getUserPolls (user) {
 
 exports.createPoll = async function createPoll (poll) {
   try {
+   
+    console.log('Poll with votes init ', poll)
+    console.log('poll arr ', poll.answers)
+    for (element in poll.answers) {
+      console.log(JSON.stringify(element))
+    }
     let result = await db.collection(polls).insertOne(poll)
-    console.log(result)
     return result  
   } catch (err) {
     console.log(err.stack)

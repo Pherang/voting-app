@@ -17,7 +17,7 @@ const routes = [
     meta: { requireAuth : true }, 
     children: [
       {
-        path: 'mypolls',
+        path: '',
         name: 'my-polls',
         component: MyPolls
       },
