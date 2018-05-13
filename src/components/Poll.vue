@@ -40,12 +40,15 @@ export default {
     return {
       option: '',
       voted: false,
+      isOwner: false,
       error: null
     }
   },
-  computed: {
-    isOwner () {
-      return (this.poll.creator === this.$state.user._id)
+  created: function findOwner() {
+    console.log('This is defined as ', this)
+    console.log('Creator is  defined as ', this.poll.creator)
+    if (this.$state.user) {
+      this.isOwner = (this.poll.creator === this.$state.user._id ? true : false)
     }
   },
   methods: {
@@ -73,7 +76,29 @@ export default {
       }
     },
     async deletePoll () {
-      console.log('TODO Delete Poll')
+      console.log('Deleting Poll')
+      try {
+        const result = await fetch('http://localhost:4040/deletepoll', {
+         method: 'POST',
+         'credentials': 'include',
+         headers: {
+          'Content-Type': 'application/json'
+         },
+         body: JSON.stringify( {
+            pollid: this.poll._id,
+            creator: this.poll.creator,
+         })
+        })
+        console.log('Delete result', result)
+        if (result.ok) {
+          console.log('Poll deleted')
+        } else {
+          throw new Error('error')
+        }
+      } catch (err) {
+        console.log('Delete error: ', err)
+      }
+
     }
   }
 }

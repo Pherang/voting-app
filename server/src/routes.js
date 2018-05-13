@@ -84,4 +84,24 @@ module.exports.addRoutes = function(app) {
       let result = await database.createPoll(req.body) 
       res.json(result)
   })
+
+  app.post('/deletepoll', privateRoute, 
+    async (req,res) => {
+      console.log('Delete Poll ', req.body)
+      console.log('Creator ', req.body.creator)
+      console.log('Requestor ', req.user._id)
+      console.log('req is type ',typeof(req.user._id))
+      console.log('creator is type ',typeof(req.body.creator))
+      // Need to do a double check if the requestor of the API matches the poll they want to delete
+      if (req.user._id == req.body.creator) {
+        console.log('IDs match, processing delete')
+        let result = await database.deletePoll(req.body) 
+        res.json(result)
+      } else {
+        res.status(401)
+      }
+      res.send()
+
+  })
+
 }

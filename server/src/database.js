@@ -75,6 +75,9 @@ exports.getPolls = async function getPolls () {
   try { 
     let query = {}
     let allPollsCursor = await db.collection(polls).find(query)
+    // I surpress the creator field here
+    // This results in isOwner being evaluated to false
+    // when anonymous uses get the polls.
     allPollsCursor.project({ creator: 0})
     return (await allPollsCursor.toArray())
   } catch (err) {
@@ -90,6 +93,8 @@ exports.getUserPolls = async function getUserPolls (user) {
     let query = { creator: `${user._id}` }
     console.log('query for userpolls is', query)
     let allPollsCursor = await db.collection(polls).find(query)
+    // Creator field is passed when this is called
+    // by a logged in user.
     //allPollsCursor.project({ creator: 0})
     return (await allPollsCursor.toArray())
   } catch (err) {
@@ -108,6 +113,18 @@ exports.createPoll = async function createPoll (poll) {
     }
     console.log('poll after modify ', poll.answers)
     let result = await db.collection(polls).insertOne(poll)
+    return result  
+  } catch (err) {
+    console.log(err.stack)
+  }
+}
+
+exports.deletePoll = async function deletePoll (poll) {
+  try {
+    objId = new ObjectId(poll.pollid)
+    let query = ({ _id: objId, creator: poll.creator }) 
+    let result = await db.collection(polls).deleteOne(query)
+    console.log(result)
     return result  
   } catch (err) {
     console.log(err.stack)
