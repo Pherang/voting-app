@@ -6,12 +6,13 @@ import MyPollsLayout from './components/MyPollsLayout.vue'
 import CreatePoll from './components/CreatePoll.vue'
 import Login from './components/Login.vue'
 import state from './state'
+import Poll from './components/Poll.vue'
 
 // Install the VueRouter plugin to vue.
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', name: 'polls', component: Polls},
+  { path: '/', name: 'polls', component: Polls },
   { path: '/login', name: 'login', component: Login},
   { path: '/pollcenter', component: MyPollsLayout, 
     meta: { requireAuth : true }, 

@@ -20,13 +20,23 @@
           @click="deletePoll" 
           v-if=this.isOwner>
           Delete Poll</button>
-        <div v-if="this.voted">Thanks for Voting!</div>
+                <span v-if="this.voted">Thanks for Voting!</span>
         <button 
           :disabled="!this.option" 
           v-else type="submit">
           Submit Vote
         </button>
+        <a v-if=this.isOwner role="button" class="link-button" href="#openModal">Share Poll</a>
+      <div id="openModal" class="modalDialog">
+        <div>
+          <a id="closeModal" href="#close" title="Close" class="close">&times;</a>
+          <p>Get your link here!</p>
+          <input id="linkText" type="text" :value='"http://localhost:8080/"+poll._id'></input>
+          <button type="button" @click="copyLink">Copy Link</button>
+        </div>
+      </div>
       </form>
+    
     </div>
   </main>    
 </template>
@@ -98,7 +108,17 @@ export default {
       } catch (err) {
         console.log('Delete error: ', err)
       }
-
+    },
+    async copyLink () {
+      // A more vanilla JS way of doing this.
+      // There is clipboard.js available for Vue but wanted
+      // to be familair with this way.
+      var copyText = document.getElementById("linkText")
+      var closeButton = document.getElementById("closeModal")
+      copyText.select()
+      document.execCommand("Copy")
+      closeButton.click()
+      alert("Link copied to clipboard \n " + copyText.value)
     }
   }
 }
@@ -106,4 +126,57 @@ export default {
 
 <style scoped>
 
+.link-button {
+  display: inline-block;
+  background-color: lightblue;
+  padding: 0.2em;
+  text-decoration: none;
+  margin-top: 0.5em;
+}
+
+.modalDialog {
+  position: fixed;
+  color: white;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(20,0,0,0.8);
+  z-index: 99999;
+  opacity: 0;
+  transition: opacity 400ms ease-in;
+  pointer-events: none;
+}
+
+.modalDialog:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modalDialog > div {
+  width: 400px;
+  position: relative;
+  margin: 10% auto;
+  padding: 5px 20px 13px 20px;
+  border-radius: 10px;
+  background: grey;
+}
+
+.close {
+  background: #606061;
+  color: red;
+  line-height: 25px;
+  position: absolute;
+  right: -12px;
+  text-align: center;
+  top: -10px;
+  width: 24px;
+  text-decoration: none;
+  border-radius: 12px;
+  box-shadow: 1px 1px 3px #000;
+}
+
+.close:hover {
+  background: lightgrey;
+}
 </style>
