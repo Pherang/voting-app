@@ -85,6 +85,22 @@ exports.getPolls = async function getPolls () {
   }
 }
 
+exports.getOnePoll = async function getOnePoll (pollId) {
+  try { 
+    console.log('Database is finding poll..', pollId)
+    objId = new ObjectId(pollId)
+    let query = { _id: objId}
+    let pollCursor = await db.collection(polls).find(query)
+    // I surpress the creator field here
+    // This results in isOwner being evaluated to false
+    // when anonymous uses get the polls.
+    // pollCursor.project({ creator: 1})
+    return (await pollCursor.next())
+  } catch (err) {
+    console.log(err.stack)
+  }
+}
+
 // Could I refactor this by accepting a user parameter?
 // Defaulting to all if none specified...
 exports.getUserPolls = async function getUserPolls (user) {

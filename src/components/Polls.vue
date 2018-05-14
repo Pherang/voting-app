@@ -5,8 +5,8 @@
     <!-- Poll Main Content -->
   <div v-if="this.error">Error loading Polls</div>
   <Poll v-else v-for="poll in polls"
-    :key="poll.id"
-    :poll="poll"
+    :key="poll._id"
+    :id="poll._id"
   ></Poll>
   </div>
   

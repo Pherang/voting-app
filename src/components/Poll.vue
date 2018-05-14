@@ -20,7 +20,7 @@
           @click="deletePoll" 
           v-if=this.isOwner>
           Delete Poll</button>
-                <span v-if="this.voted">Thanks for Voting!</span>
+        <span v-if="this.voted">Thanks for Voting!</span>
         <button 
           :disabled="!this.option" 
           v-else type="submit">
@@ -29,9 +29,12 @@
         <a v-if=this.isOwner role="button" class="link-button" href="#openModal">Share Poll</a>
       <div id="openModal" class="modalDialog">
         <div>
-          <a id="closeModal" href="#close" title="Close" class="close">&times;</a>
+          <a id="closeModal" 
+             href="#close" 
+             title="Close" 
+             class="close">&times;</a>
           <p>Get your link here!</p>
-          <input id="linkText" type="text" :value='"http://localhost:8080/"+poll._id'></input>
+          <input id="linkText" type="text" :value='"http://localhost:8080/poll/"+poll._id'></input>
           <button type="button" @click="copyLink">Copy Link</button>
         </div>
       </div>
@@ -44,24 +47,46 @@
 <script>
 export default {
   props: [
-    'poll',
+    'id',
   ],
   data () {
     return {
       option: '',
       voted: false,
       isOwner: false,
+      poll: {}, // If I set this to null, the render has warnings about null, but if I set it to an object, there is no warning even if that object has no properties..
       error: null
     }
   },
-  created: function findOwner() {
-    console.log('This is defined as ', this)
-    console.log('Creator is  defined as ', this.poll.creator)
-    if (this.$state.user) {
-      this.isOwner = (this.poll.creator === this.$state.user._id ? true : false)
-    }
+  created () {
+    console.log('My route is ',this.$route)
+    this.findPoll()
+    console.log(this.poll)
   },
   methods: {
+    findOwner () { 
+      if (this.$state.user) {
+        console.log("Executing because I am joe")
+        this.isOwner = (this.$route.name == "my-polls") 
+        && (this.poll.creator === this.$state.user._id ? true : false)
+    }
+    },
+    async findPoll() {
+    
+    if (this.id) {
+      try {
+        let result = await fetch(`http://localhost:4040/poll/${this.id}`,{ "credentials": "true" })  
+        if (result.ok) {
+          this.poll = await result.json()
+          this.findOwner()
+        } else {
+          alert("No Poll Found")
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+   },
     async submit () {
       try {
         const result = await fetch('http://localhost:4040/vote', {

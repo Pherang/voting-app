@@ -13,6 +13,7 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/', name: 'polls', component: Polls },
+  { path: '/poll/:id', name: 'poll', component: Poll, props: true},
   { path: '/login', name: 'login', component: Login},
   { path: '/pollcenter', component: MyPollsLayout, 
     meta: { requireAuth : true }, 
