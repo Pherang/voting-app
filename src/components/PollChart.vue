@@ -1,25 +1,13 @@
-
-
+// PollChart.vue
 <script>
 import { Bar } from 'vue-chartjs'
 
 export default {
   extends: Bar,
+  props: [ 'chartData','chartLabels','options'],
   data () {
     return {
-      chartData: {
-        labels: ['Jan','Feb'],
-        datasets: [
-          {
-            label: '# Data One',
-            data: [4,6],
-            backgroundColor: ['blue','red'],
-            borderColor: ['orange','pink'],
-            borderWidth: 1
-          }
-        ]
-      },
-      chartOptions: {
+      localOptions: {
         scales: {
           yAxes: [{
             ticks: {
@@ -31,7 +19,8 @@ export default {
     }
   },
   mounted () {
-    this.renderChart(this.chartData, this.chartOptions)
+    this.$nextTick ( this.renderChart(this.localData,
+      this.localOptions))
   },
 }
 

@@ -4,7 +4,9 @@
     <div v-if="this.error">Error loading Poll</div>
     <div v-else>
       <div>
-        <PollChart></PollChart>
+        <PollChart
+          :chartData="chartVotes"
+        ></PollChart>
       </div>
       <h2 v-html="poll.question"></h2>
       <form @submit.prevent="submit">
@@ -62,6 +64,7 @@ export default {
       voted: false,
       isOwner: false,
       poll: {}, // If I set this to null, the render has warnings about null, but if I set it to an object, there is no warning even if that object has no properties..
+      chartData: {},
       chartQuestions: [],
       chartVotes: [],
       error: null
