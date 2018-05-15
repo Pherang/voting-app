@@ -78,7 +78,7 @@ exports.getPolls = async function getPolls () {
     // I surpress the creator field here
     // This results in isOwner being evaluated to false
     // when anonymous uses get the polls.
-    allPollsCursor.project({ creator: 0})
+    allPollsCursor.project({ _id: 1})
     return (await allPollsCursor.toArray())
   } catch (err) {
     console.log(err.stack)
@@ -93,7 +93,7 @@ exports.getOnePoll = async function getOnePoll (pollId) {
     let pollCursor = await db.collection(polls).find(query)
     // I surpress the creator field here
     // This results in isOwner being evaluated to false
-    // when anonymous uses get the polls.
+    // when anonymous users get the polls.
     // pollCursor.project({ creator: 1})
     return (await pollCursor.next())
   } catch (err) {

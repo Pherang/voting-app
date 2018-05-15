@@ -45,10 +45,7 @@ module.exports.addRoutes = function(app) {
   })
 
   app.get('/poll/:pollId', async (req,res) => {
-    console.log('Getting single poll')
-    console.log('Req params are', req.params)
     let poll = await database.getOnePoll(req.params.pollId)
-    console.log(poll)
     res.json(poll)
     res.end()
   })

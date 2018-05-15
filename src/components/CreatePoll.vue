@@ -23,6 +23,7 @@ export default {
   },
   methods: {
     async createPoll () {
+      try {
       let result = await fetch('http://localhost:4040/createpoll', {
         'credentials': 'include',
         method: 'POST',
@@ -34,8 +35,16 @@ export default {
           question: this.question,
           answers: this.answers 
         })
-
-      })
+        })
+        if (result.ok) {
+          this.question = ""
+          this.answers[0].option = "Answer 1"
+          this.answers[1].option = "Answer 2"
+        }
+      } catch (err) {
+        alert("Error is " + err)
+        console.log(err)
+      }
     },
     async addOption () {
       this.answers.push({ option: ""})  

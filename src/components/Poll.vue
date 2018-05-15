@@ -1,6 +1,6 @@
 <template>
   <main>
-      <!-- Poll Main Content -->
+    <!-- Poll Main Content -->
     <div v-if="this.error">Error loading Poll</div>
     <div v-else>
       <h2 v-html="poll.question"></h2>
@@ -15,6 +15,8 @@
           </input> 
           Votes: {{ answer.votes }}
         </div>
+        <canvas ref="pollChart" width="200" height="200"></canvas>
+        <div>
         <button 
           type="button" 
           @click="deletePoll" 
@@ -37,6 +39,7 @@
           <input id="linkText" type="text" :value='"http://localhost:8080/poll/"+poll._id'></input>
           <button type="button" @click="copyLink">Copy Link</button>
         </div>
+        </div>
       </div>
       </form>
     
@@ -45,6 +48,8 @@
 </template>
 
 <script>
+import PollChart from 'chart.js'
+
 export default {
   props: [
     'id',
@@ -59,9 +64,7 @@ export default {
     }
   },
   created () {
-    console.log('My route is ',this.$route)
     this.findPoll()
-    console.log(this.poll)
   },
   methods: {
     findOwner () { 
@@ -69,24 +72,24 @@ export default {
         console.log("Executing because I am joe")
         this.isOwner = (this.$route.name == "my-polls") 
         && (this.poll.creator === this.$state.user._id ? true : false)
-    }
+      }
     },
     async findPoll() {
     
-    if (this.id) {
-      try {
-        let result = await fetch(`http://localhost:4040/poll/${this.id}`,{ "credentials": "true" })  
-        if (result.ok) {
-          this.poll = await result.json()
-          this.findOwner()
-        } else {
-          alert("No Poll Found")
+      if (this.id) {
+        try {
+          let result = await fetch(`http://localhost:4040/poll/${this.id}`,{ "credentials": "true" })  
+          if (result.ok) {
+            this.poll = await result.json()
+            this.findOwner()
+          } else {
+            alert("No Poll Found")
+          }
+        } catch (err) {
+          console.log(err)
         }
-      } catch (err) {
-        console.log(err)
       }
-    }
-   },
+    },
     async submit () {
       try {
         const result = await fetch('http://localhost:4040/vote', {
@@ -156,6 +159,7 @@ export default {
   background-color: lightblue;
   padding: 0.2em;
   text-decoration: none;
+  border-radius: 3px;
   margin-top: 0.5em;
 }
 
