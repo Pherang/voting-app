@@ -1,4 +1,3 @@
-// PollChart.vue
 
 <script>
 import { Bar } from 'vue-chartjs'
@@ -19,10 +18,7 @@ export default {
     }
   },
   mounted () {
-
-   if (this.chartData) {
    this.renderChart(this.chartData, this.localOptions)
-   }
   },
 }
 

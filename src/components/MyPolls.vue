@@ -1,14 +1,14 @@
 <template>
   <main>
-  <h1>My Polls</h1>
-  <section class="pollslist">
+    <h1>My Polls</h1>
+    <section class="pollslist">
     <!-- Poll Main Content -->
-  <div v-if="this.error">Error loading Polls</div> <Poll v-else v-for="poll in mypolls"
-    :key="poll._id"
-    :id="poll._id"
-    ></Poll>
-  </div>
-  
+    <div v-if="this.error">Error loading Polls</div> 
+    <div v-else v-for="poll in mypolls">
+      <router-link :to="{name: 'poll', params: { id: poll._id }}">
+      {{ poll.question }}
+      </router-link>
+    </div>
   </section>
   </main>    
 </template>

@@ -40,7 +40,7 @@
              title="Close" 
              class="close">&times;</a>
           <p>Get your link here!</p>
-          <input type="text" :value='"http://localhost:8080/poll/"+poll._id'></input>
+          <input :id="this.poll._id" type="text" :value='"http://localhost:8080/poll/"+poll._id'></input>
           <button type="button" @click="copyLink">Copy Link</button>
         </div>
         </div>
@@ -69,7 +69,7 @@ export default {
         datasets: [
           {
             label: '',
-            backgroundColor: 'grey',
+            backgroundColor: ['red','blue'],
             data: []
           }
         ]
@@ -82,17 +82,10 @@ export default {
   created () {
     this.findPoll()
   },
-  mounted: function () {
-    this.$nextTick( function () {
-
-    })
-  },
   methods: {
     findOwner () { 
       if (this.$state.user) {
-        console.log("Executing because I am joe")
-        this.isOwner = (this.$route.name == "my-polls") 
-        && (this.poll.creator === this.$state.user._id ? true : false)
+        this.isOwner = (this.poll.creator === this.$state.user._id ? true : false)
       }
     },
     async findPoll() {
@@ -163,9 +156,8 @@ export default {
       // A more vanilla JS way of doing this.
       // There is clipboard.js available for Vue but wanted
       // to be familair with this way.
-      //var copyText = document.getElementById("linkText")
+      var copyText = document.getElementById(this.poll._id)
       var closeButton = document.getElementById("closeModal")
-      var copyText = this.$refs.this.id
       copyText.select()
       document.execCommand("Copy")
       closeButton.click()
@@ -188,7 +180,6 @@ export default {
         this.chartData.labels = this.chartQuestions
         this.chartData.datasets[0].data = this.chartVotes
         this.chartData.datasets[0].label = this.poll.question
-      console.log('after setup ', JSON.stringify(this.chartData))
     }
   },
   components: {
