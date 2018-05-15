@@ -1,8 +1,9 @@
 const MongoClient = require('mongodb').MongoClient,
+      ObjectId = require('mongodb').ObjectId
+      User = require('./users.js')
       assert = require('assert')
       PORT = process.env.PORT || 3000
-      
-let uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/votingapp'
+      let uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/votingapp'
 //
 // Use when deploying to heroku 
 // let dbName = 'heroku_something'
@@ -55,8 +56,7 @@ async function initPolls () {
   }
   
   let poll4 = { 
-    question : "How many hours do you sleep?",
-    answers: [
+    question : "How many hours do you sleep?", answers: [
       { option : "8 hours",votes : 0 },
       { option : "6 hours",votes : 10 }
     ]
@@ -75,8 +75,27 @@ exports.getPolls = async function getPolls () {
   try { 
     let query = {}
     let allPollsCursor = await db.collection(polls).find(query)
-    allPollsCursor.project({ creator: 0})
+    // I surpress the creator field here
+    // This results in isOwner being evaluated to false
+    // when anonymous uses get the polls.
+    allPollsCursor.project({ _id: 1})
     return (await allPollsCursor.toArray())
+  } catch (err) {
+    console.log(err.stack)
+  }
+}
+
+exports.getOnePoll = async function getOnePoll (pollId) {
+  try { 
+    console.log('Database is finding poll..', pollId)
+    objId = new ObjectId(pollId)
+    let query = { _id: objId}
+    let pollCursor = await db.collection(polls).find(query)
+    // I surpress the creator field here
+    // This results in isOwner being evaluated to false
+    // when anonymous users get the polls.
+    // pollCursor.project({ creator: 1})
+    return (await pollCursor.next())
   } catch (err) {
     console.log(err.stack)
   }
@@ -86,9 +105,13 @@ exports.getPolls = async function getPolls () {
 // Defaulting to all if none specified...
 exports.getUserPolls = async function getUserPolls (user) {
   try {
-    let query = { creator: user._id }
+    // Used template literal for user._id. It must be a string
+    let query = { creator: `${user._id}` }
+    console.log('query for userpolls is', query)
     let allPollsCursor = await db.collection(polls).find(query)
-    allPollsCursor.project({ creator: 0})
+    // Creator field is passed when this is called
+    // by a logged in user.
+    //allPollsCursor.project({ creator: 0})
     return (await allPollsCursor.toArray())
   } catch (err) {
     console.log(err.stack)
@@ -97,7 +120,26 @@ exports.getUserPolls = async function getUserPolls (user) {
 
 exports.createPoll = async function createPoll (poll) {
   try {
+   
+    console.log('Poll with votes init ', poll)
+    console.log('poll arr ', poll.answers)
+    // Zero the votes for a newly created poll
+    for (element in poll.answers) {
+      poll.answers[element].votes = 0
+    }
+    console.log('poll after modify ', poll.answers)
     let result = await db.collection(polls).insertOne(poll)
+    return result  
+  } catch (err) {
+    console.log(err.stack)
+  }
+}
+
+exports.deletePoll = async function deletePoll (poll) {
+  try {
+    objId = new ObjectId(poll.pollid)
+    let query = ({ _id: objId, creator: poll.creator }) 
+    let result = await db.collection(polls).deleteOne(query)
     console.log(result)
     return result  
   } catch (err) {
@@ -106,32 +148,74 @@ exports.createPoll = async function createPoll (poll) {
 }
 
 // Update will have to increment whatever option user chose
-exports.updatePoll = async function updatePoll (poll) {
+exports.submitVote = async function submitVote (poll) {
   try {
-    let result = await db.collection(polls).updateOne(poll)
-    console.log(result)
+    // Need to convert _id to mongo ObjectId for query
+    objId = new ObjectId(poll.pollid)
+    
+    // answers.option allows us to filter an array element to update.
+    // The $ represents the first element that matches the filter.
+    let filter = { _id:objId, "answers.option": poll.option }
+    let update = { $inc: { "answers.$.votes": 1}}
+    let result = await db.collection(polls).updateOne( filter, update )
+
+    if (result.modifiedCount > 0) {
+      console.log('Poll updated')
+    } else {
+      console.log('No update done')
+    }
   } catch (err) {
-    console.log(err.stack)
+    console.log("ERROR: ", err)
   }
 }
 
-exports.getUser = async function getUser () {
+exports.getUser = async function getUser (username) {
   try {
-    let user = await db.collection(users).findOne()
-    console.log(user)
+    let result = await db.collection(users)
+      .findOne({ username: username})
+    console.log(result)
+    return result
   } catch (err) {
     console.log(err.stack)
+    return err
+  }
+}
+
+exports.getUserById = async function getUserById (id) {
+  try {
+    const objId = new ObjectId(id)
+    let result = await db.collection(users)
+      .findOne({ _id: objId })
+    console.log('database deserialize ', result)
+    return result
+  } catch (err) {
+    console.log(err.stack)
+    return err
   }
 }
 
 exports.createUser = async function createUser (user) {
   try {
-     if(getUser(user)) {
-      return ('Username already exists. Please choose another') 
-     }
-
-    let result = await db.collection(users).insertOne(user)
-    console.log(result)
+    // this and module.exports refer to the same object
+    // if I understand right this module is wrapped in a function 
+    // the function is the global content that this refers to
+    let existingUser = await this.getUser(user.username)
+    console.log('I found user: ', existingUser)
+    if (existingUser) {
+      return ('Username exists please try another')
+    } else {
+      let hashedPassword = await User.hashPassword(user.password)
+      user.password = hashedPassword
+      console.log('User object is: ', user)
+      let result = await db.collection(users).insertOne(user)
+      if (result.insertedCount == 1) {
+        console.log('Success')
+        return result.insertedCount
+      } else {
+        console.log('Error inserting user: ', user.username)
+        return 'Error creating user'
+      }
+    }
   } catch (err) {
     console.log(err.stack)
   }

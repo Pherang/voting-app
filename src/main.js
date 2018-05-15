@@ -9,9 +9,29 @@ import VueState from './plugins/state'
 // VueState  
 Vue.use(VueState, state)
 
+async function main () {
+
+// When reloading page/app try to get user from session
+  try {
+   let result  = await fetch('http://localhost:4040/getUser', {
+      headers: {
+        'Content-type': 'application/json',
+      },
+      'credentials': 'include'
+    })
+    if (result.ok) {
+      state.user = await result.json()
+    } 
+  } catch (err) {
+    console.warn(err)
+  }
+  
 new Vue({
   el: '#app',
   data: state,
   render: h => h(AppLayout),
   router
 })
+
+}
+main()

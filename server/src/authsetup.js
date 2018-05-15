@@ -1,25 +1,34 @@
 const passport = require ('passport')
 const LocalStrategy = require ('passport-local').Strategy
+const database = require('./database.js')
+const users = require('./users.js')
 
 console.log("authsetup imported")
 
-
 async function authenticateUser (username, password) {
-
-    // TODO
-
-
-
+  const user = await database.getUser(username)
+  let validPassword = false
+  if (user) {
+    validPassword = await users.checkPassword(user, password)
+    console.log('Is it valid?', validPassword)
+  }
+  return {
+    validPassword,
+    user
+  }
 }
 
 // Setup authentication strategy. This must be done before initializing passport.
 passport.use('local', new LocalStrategy(
   async (username, password, done) => {
-    const { valid, user } = await authenticateUser(username, password)
-    if (valid) {
+    // Uses object deconstruction
+    const { validPassword, user } = await authenticateUser(username, password)
+
+    if (validPassword) {
+      console.log('Sending user from passport strategy ', user)
       return done(null, user)
     } else {
-      return done('Incorrect username or password')
+      return done(null, false)
     }
   }
 ))
@@ -27,13 +36,18 @@ passport.use('local', new LocalStrategy(
 // serializeUser needs to be setup because we're using sessions to store user state.
 passport.serializeUser(
   (user, done) => {
+    console.log(this)
+    console.log('Serializing user')
+    console.log(user._id)
     done(null, user._id)
   }
 )
 
 passport.deserializeUser(
   async (id, done) => {
-    const user = await console.log("deserialize")
+    console.log('Deserializing user ', id)
+    const user = await database.getUserById(id)
+    console.log(user)
     const err = !user ? new Error('User not found') : null //sets session to null
     done(err, user || null)
   }

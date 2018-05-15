@@ -4,16 +4,10 @@
   <section class="pollslist">
     <!-- Poll Main Content -->
   <div v-if="this.error">Error loading Polls</div>
-  <div v-else v-for="poll in polls"> 
-    <h2 v-html="poll.question"></h2>
-    <form @submit.prevent="submit">
-      <div v-for="answer in poll.answers">
-        <input :name="poll._id" type="radio"> {{ answer.option }}</input> Votes: {{ answer.votes }}
-      </div>
-      <button type="submit">
-         Vote
-      </button>
-    </form>
+  <Poll v-else v-for="poll in polls"
+    :key="poll._id"
+    :id="poll._id"
+  ></Poll>
   </div>
   
   </section>
@@ -21,6 +15,8 @@
 </template>
 
 <script>
+import Poll from './Poll.vue'
+
 export default {
   data () {
     return {
@@ -30,7 +26,9 @@ export default {
   },
   async created () {
     try {
-      const response = await fetch('http://localhost:4040/polls')
+      const response = await fetch('http://localhost:4040/polls', {
+          'credentials': 'include'
+        })
       if (response.ok) {
         this.polls = await response.json()
       } else {
@@ -40,11 +38,8 @@ export default {
       this.error = err
     }
   },
-  methods: {
-    async submit () {
-      console.log(this.polls[0]._id) 
-      console.log(
-    }
+  components: {
+    Poll
   }
 }
 </script>
