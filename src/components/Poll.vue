@@ -5,8 +5,8 @@
     <div v-else>
       <div>
         <PollChart
-          :chartData="chartVotes"
-        ></PollChart>
+          :chartData="chartData">
+        </PollChart>
       </div>
       <h2 v-html="poll.question"></h2>
       <form @submit.prevent="submit">
@@ -40,7 +40,7 @@
              title="Close" 
              class="close">&times;</a>
           <p>Get your link here!</p>
-          <input id="linkText" type="text" :value='"http://localhost:8080/poll/"+poll._id'></input>
+          <input type="text" :value='"http://localhost:8080/poll/"+poll._id'></input>
           <button type="button" @click="copyLink">Copy Link</button>
         </div>
         </div>
@@ -64,7 +64,16 @@ export default {
       voted: false,
       isOwner: false,
       poll: {}, // If I set this to null, the render has warnings about null, but if I set it to an object, there is no warning even if that object has no properties..
-      chartData: {},
+      chartData: {
+        labels: [],
+        datasets: [
+          {
+            label: '',
+            backgroundColor: 'grey',
+            data: []
+          }
+        ]
+      },
       chartQuestions: [],
       chartVotes: [],
       error: null
@@ -75,6 +84,7 @@ export default {
   },
   mounted: function () {
     this.$nextTick( function () {
+
     })
   },
   methods: {
@@ -130,8 +140,7 @@ export default {
       console.log('Deleting Poll')
       try {
         const result = await fetch('http://localhost:4040/deletepoll', {
-         method: 'POST',
-         'credentials': 'include',
+         method: 'POST', 'credentials': 'include',
          headers: {
           'Content-Type': 'application/json'
          },
@@ -154,14 +163,16 @@ export default {
       // A more vanilla JS way of doing this.
       // There is clipboard.js available for Vue but wanted
       // to be familair with this way.
-      var copyText = document.getElementById("linkText")
+      //var copyText = document.getElementById("linkText")
       var closeButton = document.getElementById("closeModal")
+      var copyText = this.$refs.this.id
       copyText.select()
       document.execCommand("Copy")
       closeButton.click()
       alert("Link copied to clipboard \n " + copyText.value)
     },
     setupChartData () {
+      console.log('The default chart is ', this.$data.chartData)
       this.poll.answers.forEach( function(element) {
         console.log('What is THIS inside forEach ', this)
         console.log('Answers are ', element)
@@ -170,7 +181,14 @@ export default {
         console.log('After question push ', this.chartQuestions)
         this.chartVotes.push(element.votes)
         console.log('After votes push ', this.chartVotes)
+
       },this) // Passing the vue instance to forEach.
+
+        // Setup chartData object to be passed as prop
+        this.chartData.labels = this.chartQuestions
+        this.chartData.datasets[0].data = this.chartVotes
+        this.chartData.datasets[0].label = this.poll.question
+      console.log('after setup ', JSON.stringify(this.chartData))
     }
   },
   components: {

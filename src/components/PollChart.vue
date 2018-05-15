@@ -1,10 +1,10 @@
 // PollChart.vue
+
 <script>
 import { Bar } from 'vue-chartjs'
-
 export default {
   extends: Bar,
-  props: [ 'chartData','chartLabels','options'],
+  props: [ 'chartData','options'],
   data () {
     return {
       localOptions: {
@@ -19,8 +19,10 @@ export default {
     }
   },
   mounted () {
-    this.$nextTick ( this.renderChart(this.localData,
-      this.localOptions))
+
+   if (this.chartData) {
+   this.renderChart(this.chartData, this.localOptions)
+   }
   },
 }
 
