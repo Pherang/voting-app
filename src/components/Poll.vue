@@ -3,6 +3,9 @@
     <!-- Poll Main Content -->
     <div v-if="this.error">Error loading Poll</div>
     <div v-else>
+      <div>
+        <PollChart></PollChart>
+      </div>
       <h2 v-html="poll.question"></h2>
       <form @submit.prevent="submit">
         <div v-for="answer in poll.answers">
@@ -15,8 +18,7 @@
           </input> 
           Votes: {{ answer.votes }}
         </div>
-        <canvas ref="pollChart" width="200" height="200"></canvas>
-        <div>
+                <div>
         <button 
           type="button" 
           @click="deletePoll" 
@@ -41,6 +43,7 @@
         </div>
         </div>
       </div>
+        
       </form>
     
     </div>
@@ -48,8 +51,7 @@
 </template>
 
 <script>
-import PollChart from 'chart.js'
-
+import PollChart from './PollChart.vue'
 export default {
   props: [
     'id',
@@ -60,11 +62,17 @@ export default {
       voted: false,
       isOwner: false,
       poll: {}, // If I set this to null, the render has warnings about null, but if I set it to an object, there is no warning even if that object has no properties..
+      chartQuestions: [],
+      chartVotes: [],
       error: null
     }
   },
   created () {
     this.findPoll()
+  },
+  mounted: function () {
+    this.$nextTick( function () {
+    })
   },
   methods: {
     findOwner () { 
@@ -76,12 +84,14 @@ export default {
     },
     async findPoll() {
     
+    console.log('Vue Instance is ', this)
       if (this.id) {
         try {
           let result = await fetch(`http://localhost:4040/poll/${this.id}`,{ "credentials": "true" })  
           if (result.ok) {
             this.poll = await result.json()
             this.findOwner()
+            this.setupChartData()
           } else {
             alert("No Poll Found")
           }
@@ -147,8 +157,23 @@ export default {
       document.execCommand("Copy")
       closeButton.click()
       alert("Link copied to clipboard \n " + copyText.value)
+    },
+    setupChartData () {
+      this.poll.answers.forEach( function(element) {
+        console.log('What is THIS inside forEach ', this)
+        console.log('Answers are ', element)
+        console.log(element.option)
+        this.chartQuestions.push(element.option)
+        console.log('After question push ', this.chartQuestions)
+        this.chartVotes.push(element.votes)
+        console.log('After votes push ', this.chartVotes)
+      },this) // Passing the vue instance to forEach.
     }
+  },
+  components: {
+    PollChart
   }
+
 }
 </script>
 
