@@ -3,9 +3,11 @@
     <!-- Poll Main Content -->
     <div v-if="this.error">Error loading Poll</div>
     <div v-else>
-      <div>
+      <div class="chart">
         <PollChart
-          :chartData="chartData">
+          :chartData="chartData"
+          :option="chartOption"
+          >
         </PollChart>
       </div>
       <h2 v-html="poll.question"></h2>
@@ -76,6 +78,7 @@ export default {
       },
       chartQuestions: [],
       chartVotes: [],
+      chartOption : {},
       error: null
     }
   },
@@ -122,6 +125,7 @@ export default {
         if (result.ok) {
           console.log('Vote submitted')
           this.voted = true;
+          this.findPoll()
         } else {
           throw new Error('error')
         }
@@ -165,6 +169,9 @@ export default {
     },
     setupChartData () {
       console.log('The default chart is ', this.$data.chartData)
+      // Need to zero these arrays everytime we update the chart data.
+      this.chartQuestions = []
+      this.chartVotes = []
       this.poll.answers.forEach( function(element) {
         console.log('What is THIS inside forEach ', this)
         console.log('Answers are ', element)
@@ -244,5 +251,10 @@ export default {
 
 .close:hover {
   background: lightgrey;
+}
+
+.chart {
+  width: 400px;
+  height: 400px;
 }
 </style>
