@@ -6,7 +6,9 @@
       <div class="chart">
         <PollChart
           :chartData="chartData"
-          :option="chartOption"
+          :options="chartOptions"
+          :width="400"
+          :height="400"
           >
         </PollChart>
       </div>
@@ -66,27 +68,34 @@ export default {
       voted: false,
       isOwner: false,
       poll: {}, // If I set this to null, the render has warnings about null, but if I set it to an object, there is no warning even if that object has no properties..
+      chartOptions: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      },
       chartData: {
         labels: [],
         datasets: [
           {
             label: '',
-            backgroundColor: ['red','blue'],
+            backgroundColor: ['blue','red'],
             data: []
           }
         ]
       },
       chartQuestions: [],
       chartVotes: [],
-      chartOption : {},
       error: null
     }
   },
   created () {
     this.findPoll()
   },
-  methods: {
-    findOwner () { 
+  methods: { findOwner () { 
       if (this.$state.user) {
         this.isOwner = (this.poll.creator === this.$state.user._id ? true : false)
       }
@@ -184,10 +193,22 @@ export default {
       },this) // Passing the vue instance to forEach.
 
         // Setup chartData object to be passed as prop
-        this.chartData.labels = this.chartQuestions
-        this.chartData.datasets[0].data = this.chartVotes
-        this.chartData.datasets[0].label = this.poll.question
-    }
+        //this.chartData.labels = this.chartQuestions
+        //this.chartData.datasets[0].data = this.chartVotes
+        //this.chartData.datasets[0].label = this.poll.question
+        // Because of limitations of javascript if we replace
+        // the whole object that will trigger a state update.
+        this.chartData = {
+          labels: this.chartQuestions,
+          datasets: [
+            {
+              label: this.poll.question,
+              backgroundColor: ['red','blue'],
+              data: this.chartVotes
+            }
+          ]
+        }
+      }
   },
   components: {
     PollChart
