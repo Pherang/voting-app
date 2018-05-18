@@ -43,8 +43,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../style/vars';
 h1 {
   text-align: center;
+  color: $secondary-text-color-dark;
 }
 </style>

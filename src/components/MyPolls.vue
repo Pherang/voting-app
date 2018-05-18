@@ -50,6 +50,6 @@ export default {
 
 h1 {
   text-align: center;
-  color: $secondary-text-color;
+  color: $secondary-text-color-dark;
 }
 </style>

@@ -21,7 +21,7 @@
     <div class="spacer"></div>
     <template v-if="$state.user">
       <a>{{ $state.user.username }} </a>&nbsp;
-      <button type="button" @click="logout">Logout</button>
+      <a class="nav-bar__logout-button"i @click="logout">Logout</a>
     </template>
     <router-link 
       class="router-link--custom" 
