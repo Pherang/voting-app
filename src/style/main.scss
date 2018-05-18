@@ -4,7 +4,7 @@ body {
   font-family: sans-serif;
   color: $primary-text-color;
   background: $primary-color-light;
- 
+  margin: 0px; 
 }
 
 
@@ -20,11 +20,11 @@ body {
   padding-right: 16px;
 }
 
-.logo {         
+.logo {
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 120%;
+  height: 100%;
   font-size: 24px;       
   color: $accent-color; 
   background: $surface-white;
@@ -45,7 +45,7 @@ body {
 .poll-link {                
   display: inline-block;    
   text-decoration: none;    
-  background: $primary-color-dark;         
+  background: $accent-color;         
   margin-top: 0.2em;        
   color: $primary-color-text;             
   padding: 0.5em;           
@@ -57,7 +57,7 @@ body {
 }                           
                         
 .poll-link:hover {          
-  background: $accent-color;    
+  background: $accent-color-light;    
 }                           
 
 .poll-background {

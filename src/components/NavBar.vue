@@ -1,18 +1,37 @@
 <template>
   <nav class="navbar">
-    <span class="logo">Votetastic</span>
+    <router-link 
+      class="router-link--logo" 
+      :to="{name: 'polls'}" exact>
+      <span class="logo">Votetastic</span>
+      </router-link>
     <!-- Navigation Links. router-link components -->
-    <router-link class="router-link-space" :to="{name: 'polls'}" exact>Polls</router-link>
-    <router-link class="router-link-space" to="/pollcenter" exact>MyPolls</router-link>
+    <router-link 
+      class="router-link--custom" 
+      :to="{name: 'polls'}" 
+      exact>
+      Polls
+    </router-link>
+    <router-link 
+      class="router-link--custom" 
+      to="/pollcenter" 
+      exact>
+      MyPolls
+    </router-link>
     <div class="spacer"></div>
     <template v-if="$state.user">
       <a>{{ $state.user.username }} </a>&nbsp;
-      <a @click="logout">Logout</a>
+      <button type="button" @click="logout">Logout</button>
     </template>
-    <router-link v-else :to="{name: 'login'}" exact>Login</router-link>
+    <router-link 
+      class="router-link--custom" 
+      v-else 
+      :to="{name: 'login'}" 
+      exact>
+      Login
+    </router-link>
   </nav>    
-</template>
-
+</template> 
 <script>
 export default {
   methods: {
@@ -31,21 +50,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../style/main.scss';
-
-.spacer {
-  flex: 100%;
-}
-
-.router-link-space {
-  margin-left: 10px;
-  margin-right: 10px;
-  text-decoration: none;
-  color: $primary-color-text;
-}
-
-.router-link-exact-active {
-  border-bottom-color: $accent-color;
-}
-
+  @import '../style/nav-bar.scss';
 </style>

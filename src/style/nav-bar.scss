@@ -1,0 +1,40 @@
+@import './vars';
+
+.spacer {
+  flex: 100%;
+}
+
+.router-link--logo {
+  text-decoration: none;
+  height: 120%;
+}
+
+.router-link--custom {
+  align-text: center;
+  vertical-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-right: .3em;
+  padding-left: .3em;
+  border-bottom: 6px solid;
+  border-top: 0px;
+  border-bottom-color: $primary-color;
+  line-height: 2.6em;
+  text-decoration: none;
+  color: $secondary-text-color;
+
+}
+
+.router-link--custom:hover {
+  border-bottom-color: $accent-color-light;
+  color: $primary-color-text;
+}
+
+.router-link-exact-active {
+  border-bottom-color: $accent-color-light;
+  color: $primary-color-text;
+}
+
+.router-link-active {
+  border-bottom-color: $accent-color-light;
+}
