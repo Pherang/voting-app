@@ -1,13 +1,8 @@
 <template>
   <div>
-    <header>
-    Votetastic
-    </header>
-    
     <NavBar />
     <!-- Main Content -->
     <router-view />
-
   </div>    
 </template>
 
@@ -20,5 +15,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+  @import '../style/main';
 </style>

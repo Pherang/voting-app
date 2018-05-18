@@ -1,11 +1,13 @@
 <template>
   <main>
   <h1>Polls to Vote On</h1>
-  <section class="pollslist">
-    <!-- Poll Main Content -->
-  <div v-if="this.error">Error loading Polls</div>
-  <div v-else v-for="poll in polls">
-    <router-link :to="{name: 'poll', params: { id: poll._id }}">{{ poll.question }}</router-link>
+  <section>
+    <div class="polls-list"> 
+      <!-- Poll Main Content -->
+      <div v-if="this.error">Error loading Polls</div>
+      <div v-else v-for="poll in polls">
+        <router-link class="poll-link" :to="{name: 'poll', params: { id: poll._id }}">{{ poll.question }}</router-link>
+    </div>
   </div>
   </section>
   </main>    
@@ -42,13 +44,7 @@ export default {
 </script>
 
 <style scoped>
-
 h1 {
   text-align: center;
-}
-.pollslist {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
 }
 </style>

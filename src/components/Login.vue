@@ -26,6 +26,7 @@
           v-model="password2"
           placeholder="Confirm Password" /><br>
       </template>
+      <p v-if="errorMsg">{{ errorMsg }}</p>
       <br>
       <template v-if="mode ==='login'">
         <button
@@ -56,6 +57,7 @@ export default {
       email: '',
       password: '',
       password2: '',
+      errorMsg: ''
     }
   },
   computed: {
@@ -111,7 +113,9 @@ export default {
           password: this.password
         })
       })
-      console.log('Signup status: ', await result.json())
+      let finalResult = await result.json()
+
+      console.log('Signup status: ', finalResult)
     },
     async login () {
       console.log('Loggin in')

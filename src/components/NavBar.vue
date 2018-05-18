@@ -1,8 +1,9 @@
 <template>
   <nav class="navbar">
+    <span class="logo">Votetastic</span>
     <!-- Navigation Links. router-link components -->
-    <router-link :to="{name: 'polls'}" exact>Polls</router-link>
-    <router-link to="/pollcenter" exact>MyPolls</router-link>
+    <router-link class="router-link-space" :to="{name: 'polls'}" exact>Polls</router-link>
+    <router-link class="router-link-space" to="/pollcenter" exact>MyPolls</router-link>
     <div class="spacer"></div>
     <template v-if="$state.user">
       <a>{{ $state.user.username }} </a>&nbsp;
@@ -29,20 +30,22 @@ export default {
 }
 </script>
 
-<style>
-
-.navbar {
-  display: flex;
-  justify-content: space-around;
-  width: 90%;
-}
+<style lang="scss" scoped>
+@import '../style/main.scss';
 
 .spacer {
   flex: 100%;
 }
 
-.router-link-active {
-  border-bottom-color: red;
+.router-link-space {
+  margin-left: 10px;
+  margin-right: 10px;
+  text-decoration: none;
+  color: $primary-color-text;
+}
+
+.router-link-exact-active {
+  border-bottom-color: $accent-color;
 }
 
 </style>

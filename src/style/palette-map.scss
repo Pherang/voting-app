@@ -1,0 +1,14 @@
+/* Map palette from materials design tool to md colors
+ Palette colors are given in hex
+ */
+@import './md-colors';
+
+$primary-color-dark:  $md-teal-700;
+$primary-color:       $md-teal-500;
+$primary-color-light: $md-teal-100;
+$primary-color-text:  $md-white;
+$accent-color:        $md-deep-orange;
+$primary-text-color:  $md-grey-900;
+$secondary-text-color: $md-grey-700;
+$divider-color:        $md-grey-400;
+$surface-white: $md-white;

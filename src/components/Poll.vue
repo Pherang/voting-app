@@ -1,8 +1,9 @@
 <template>
   <main>
-    <!-- Poll Main Content -->
-    <div v-if="this.error">Error loading Poll</div>
-    <div v-else>
+  <!-- Poll Main Content -->
+  <div v-if="this.error">Error loading Poll</div>
+  <div class="poll-background" v-else>
+    <div class="poll" >
       <div class="chart">
         <PollChart
           :chartData="chartData"
@@ -24,7 +25,7 @@
           </input> 
           Votes: {{ answer.votes }}
         </div>
-                <div>
+     <div>
         <button 
           type="button" 
           @click="deletePoll" 
@@ -36,7 +37,7 @@
           v-else type="submit">
           Submit Vote
         </button>
-        <a v-if=this.isOwner role="button" class="link-button" href="#openModal">Share Poll</a>
+        <a v-if=this.isOwner role="button" class="share-button" href="#openModal">Share Poll</a>
       <div id="openModal" class="modalDialog">
         <div>
           <a id="closeModal" 
@@ -51,9 +52,9 @@
       </div>
         
       </form>
-    
-    </div>
-  </main>    
+    </div> 
+  </div>
+</main>    
 </template>
 
 <script>
@@ -217,29 +218,22 @@ export default {
 }
 </script>
 
-<style scoped>
-
-.link-button {
+<style lang="scss" scoped>
+@import '../style/vars';
+.share-button {
   display: inline-block;
-  background-color: lightblue;
+  background-color: $primary-color-dark;
+  color: $primary-color-text;
   padding: 0.2em;
   text-decoration: none;
   border-radius: 3px;
   margin-top: 0.5em;
+  font-family: sans-serif;
+  font-size: 20px;
 }
 
-.modalDialog {
-  position: fixed;
-  color: white;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(20,0,0,0.8);
-  z-index: 99999;
-  opacity: 0;
-  transition: opacity 400ms ease-in;
-  pointer-events: none;
+.share-button:hover {
+  background-color: $accent-color;
 }
 
 .modalDialog:target {
@@ -274,8 +268,4 @@ export default {
   background: lightgrey;
 }
 
-.chart {
-  width: 400px;
-  height: 400px;
-}
 </style>
