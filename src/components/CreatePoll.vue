@@ -1,14 +1,18 @@
 <template>
   <main>
+  <div class="base-form--background">
   <h1>Create a Poll</h1>
-  <section>
-    Poll Question <input type="text"v-model="question"></input>   
+  <section class="base-form">
+    <input type="text"v-model="question" placeholder="Poll Question"></input>   
     <div v-for="answer in answers">
-      Option: <input type="text" v-model="answer.option"></input>
+      <input type="text" v-model="answer.option" placeholder="Option"></input>
     </div>
-    <button @click="addOption">Add Option</button>
-    <button @click="createPoll">Submit</button>
+    <p v-if="errorMsg">{{ errorMsg }}</p>   
+    <br>
+    <button class="base-button--small" @click="addOption">Add Option</button>
+    <button class="base-button--small" @click="createPoll">Submit</button>
   </section>
+  </div>
   </main>    
 </template>
 
@@ -17,7 +21,7 @@ export default {
   data () {
     return {
       question: '',
-      answers: [{ option: "Answer1"}, { option: "Answer2"} ],
+      answers: [{ option: ""}, { option: ""} ],
       error: null
     }
   },
@@ -53,13 +57,12 @@ export default {
 }
 </script>
 
-<style scoped>
-h1 {
-  text-align: center;
-}
-.pollslist {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
+<style lang="scss" scoped>
+@import '../style/forms';
+
+h1 {                          
+  text-align: center;         
+  color: $primary-color-text; 
+}                                 
+
 </style>

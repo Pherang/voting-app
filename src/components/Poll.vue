@@ -27,17 +27,24 @@
         </div>
      <div>
         <button 
+          class="base-button--delete"
           type="button" 
           @click="deletePoll" 
           v-if=this.isOwner>
           Delete Poll</button>
         <span v-if="this.voted">Thanks for Voting!</span>
         <button 
+          class="base-button"
           :disabled="!this.option" 
           v-else type="submit">
           Submit Vote
         </button>
-        <a v-if=this.isOwner role="button" class="share-button" href="#openModal">Share Poll</a>
+        <a v-if=this.isOwner 
+          role="button" 
+          class="base-button" 
+          href="#openModal">
+          Share Poll
+        </a>
       <div id="openModal" class="modalDialog">
         <div>
           <a id="closeModal" 
@@ -219,53 +226,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../style/vars';
-.share-button {
-  display: inline-block;
-  background-color: $primary-color-dark;
-  color: $primary-color-text;
-  padding: 0.2em;
-  text-decoration: none;
-  border-radius: 3px;
-  margin-top: 0.5em;
-  font-family: sans-serif;
-  font-size: 20px;
-}
-
-.share-button:hover {
-  background-color: $accent-color;
-}
-
-.modalDialog:target {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.modalDialog > div {
-  width: 400px;
-  position: relative;
-  margin: 10% auto;
-  padding: 5px 20px 13px 20px;
-  border-radius: 10px;
-  background: grey;
-}
-
-.close {
-  background: #606061;
-  color: red;
-  line-height: 25px;
-  position: absolute;
-  right: -12px;
-  text-align: center;
-  top: -10px;
-  width: 24px;
-  text-decoration: none;
-  border-radius: 12px;
-  box-shadow: 1px 1px 3px #000;
-}
-
-.close:hover {
-  background: lightgrey;
-}
-
+@import '../style/main';
 </style>

@@ -1,4 +1,5 @@
 <template>
+  <div class="nav-bar-scroll">
   <nav class="navbar">
     <router-link 
       class="router-link--logo" 
@@ -31,6 +32,7 @@
       Login
     </router-link>
   </nav>    
+  </div>
 </template> 
 <script>
 export default {

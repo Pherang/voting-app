@@ -4,6 +4,28 @@
   flex: 100%;
 }
 
+.nav-bar-scroll {
+  position: sticky;
+}
+.nav-bar__logout-button {
+  font-size: 1em;
+  align-text: center;
+  vertical-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-right: .3em;
+  padding-left: .3em;
+  border-top: 0px;
+  background: $primary-color;
+  text-decoration: none;
+  line-height: 3em;
+  color: $primary-color-text;
+}
+
+.nav-bar__logout-button:hover {
+  background: $primary-color-dark;        
+}
+
 .router-link--logo {
   text-decoration: none;
   height: 120%;
@@ -38,3 +60,22 @@
 .router-link-active {
   border-bottom-color: $accent-color-light;
 }
+
+
+
+.share-button {                          
+  display: inline-block;                 
+  background-color: $primary-color-dark; 
+  color: $primary-color-text;            
+  padding: 0.2em;                        
+  text-decoration: none;                 
+  border-radius: 3px;                    
+  margin-top: 0.5em;                     
+  font-family: sans-serif;               
+  font-size: 20px;                       
+}                                        
+
+.share-button:hover {               
+  background-color: $accent-color;  
+}                                   
+

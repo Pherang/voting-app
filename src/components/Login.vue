@@ -1,7 +1,7 @@
 <template>
-  <div class="loginsignup">
+  <div class="base-form--background">
     <!-- Login Main Content -->
-    <form @submit.prevent="submit">
+    <form class="base-form" @submit.prevent="submit">
       <h2>{{ title }}</h2>
       <input 
         type="text" 
@@ -30,19 +30,31 @@
       <br>
       <template v-if="mode ==='login'">
         <button
+          class="base-button--small"
           type="button"
           @click="mode ='signup'">
           Create Account
         </button>
-        <button type="submit" :disabled="!validLogin" >Login</button>
+        <button 
+          class="base-button--small"
+          type="submit" 
+          :disabled="!validLogin" >
+          Login
+        </button>
       </template>
       <template v-if="mode ==='signup'">
         <button
+          class="base-button--small"
           type="button"
           @click="mode ='login'">
           Log in
         </button>
-        <button type="submit" :disabled="!validSignup">Signup</button>
+        <button 
+          class="base-button--small"
+          type="submit" 
+          :disabled="!validSignup">
+          Signup
+        </button>
       </template>
     </form>
   </div>    
@@ -149,21 +161,6 @@ export default {
 }
 </script>
 
-<style scoped>
-
-.loginsignup {
-  margin:auto;
-  margin-top:10%;
-  padding: 1%;
-  background-color: lightblue;
-  width: 80%;
-  border: 1px;
-
-}
-
-form {
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 5%;
-}
+<style lang="scss" scoped>
+  @import '../style/forms';
 </style>
