@@ -25,7 +25,7 @@
           </input> 
           Votes: {{ answer.votes }}
         </div>
-     <div>
+     <div class="poll-button-group">
         <button 
           class="base-button--delete"
           type="button" 
