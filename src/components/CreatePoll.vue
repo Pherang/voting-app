@@ -1,32 +1,41 @@
 <template>
   <main>
   <div class="base-form--background">
-  <h1>Create a Poll</h1>
-  <section class="base-form">
+  <h1>Create a Poll</h1> <section class="base-form">
     <div class="text-field-container">
       <div class="text-field">
         <input 
           class="text-field__input"
-          id="bobo"
+          id="theQuestion"
           type="text"
           v-model="question"
           required="true"
           >
-          <label for="bobo" class="text-field__label">
+          <label for="theQuestion" class="text-field__label">
           Poll Question
           </label>
-        <div class="text-field__line"></div>
+          <div class="text-field__line"></div>
         </input>
-                </div>
+       </div>
     </div>
-    <div v-for="answer in answers">
-      <input 
-        type="text"
-        v-model="answer.option"
-        placeholder="Option">
-      </input>
+    <div v-for="(answer, index) in answers">
+      <div class="text-field-container">
+        <div class="text-field">
+          <input 
+          class="text-field__input"
+          :id="htmlIds[index]"
+          type="text"
+          v-model="answer.option"
+          required="true"
+          >
+          <label :for="htmlIds[index]" class="text-field__label">
+          Option
+          </label>
+          </input>
+        </div>
+      </div>
     </div>
-    <p v-if="errorMsg">{{ errorMsg }}</p>   
+    <p v-if="error">{{ error }}</p>   
     <br>
     <button 
       class="base-button--small" 
@@ -49,6 +58,7 @@ export default {
     return {
       question: '',
       answers: [{ option: ""}, { option: ""} ],
+      htmlIds: ["option0","option1"],
       error: null
     }
   },
@@ -69,8 +79,9 @@ export default {
         })
         if (result.ok) {
           this.question = ""
-          this.answers[0].option = "Answer 1"
-          this.answers[1].option = "Answer 2"
+          this.answers = [{ option: ""}, { option: ""} ]
+          this.htmlIds = ["option0","option1"]
+
         }
       } catch (err) {
         alert("Error is " + err)
@@ -79,6 +90,7 @@ export default {
     },
     async addOption () {
       this.answers.push({ option: ""})  
+      this.htmlIds.push("option" + (this.htmlIds.length))
     }
   }
 }
