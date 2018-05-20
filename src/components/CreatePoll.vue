@@ -3,14 +3,41 @@
   <div class="base-form--background">
   <h1>Create a Poll</h1>
   <section class="base-form">
-    <input type="text"v-model="question" placeholder="Poll Question"></input>   
+    <div class="text-field-container">
+      <div class="text-field">
+        <input 
+          class="text-field__input"
+          id="bobo"
+          type="text"
+          v-model="question"
+          required="true"
+          >
+          <label for="bobo" class="text-field__label">
+          Poll Question
+          </label>
+        <div class="text-field__line"></div>
+        </input>
+                </div>
+    </div>
     <div v-for="answer in answers">
-      <input type="text" v-model="answer.option" placeholder="Option"></input>
+      <input 
+        type="text"
+        v-model="answer.option"
+        placeholder="Option">
+      </input>
     </div>
     <p v-if="errorMsg">{{ errorMsg }}</p>   
     <br>
-    <button class="base-button--small" @click="addOption">Add Option</button>
-    <button class="base-button--small" @click="createPoll">Submit</button>
+    <button 
+      class="base-button--small" 
+      @click="addOption">
+      Add Option
+    </button>
+    <button 
+      class="base-button--small" 
+      @click="createPoll">
+      Submit
+    </button>
   </section>
   </div>
   </main>    

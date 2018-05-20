@@ -8,7 +8,7 @@
   background: $primary-color-dark;
   width: 80%;                  
   border: none;                 
-  border-radius: 2px;
+  border-radius: 3px;
 }                              
 
 .base-form {
@@ -17,4 +17,57 @@
   color: $primary-color-text;
 }
 
+.text-field-container {
+  min-width: 200px;
+  margin-bottom: 10px;
+}
 
+.text-field {
+  height: 56px;
+  min-width: 200px;
+  background: white;
+  display: inline-block;
+  position: relative;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.text-field__input {
+  text-decoration: none;
+  min-width: 200px;
+  padding: 20px 16px 0;
+  border: 0;
+  font-size: 16px;
+  height: 36px;
+  position: absolute;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.text-field__input:focus + .text-field__label,
+.text-field__input:valid + .text-field__label,
+.text-field__input:hover + .text-field__label 
+{
+  top: 10px;
+  font-size: 14px;
+}
+
+
+.text-field__label {
+  margin-left: 16px;
+  text-decoration: none;
+  color: $secondary-text-color-dark;
+  min-width: 200px;
+  border: 0;
+  top: 30px;
+  position: absolute;
+  cursor: text;
+  transition: font-size 0.5s, top 0.5s;
+}
+
+.text-field__line {
+  height: 2px;
+  background-color: $primary-color-dark;
+  bottom: 0px;
+  position: absolute;
+  z-index: 10;
+  display: block;
+}
