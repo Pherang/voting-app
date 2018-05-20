@@ -34,7 +34,9 @@ body {
 
 .base-button--delete {
   @extend %base-button;
-  background: $accent-color-dark;
+  background: none;
+  color: $accent-color-dark;
+  box-shadow: 0px 0px 0px; 
 }
 
 .base-button--delete:hover {
@@ -113,6 +115,11 @@ body {
 
 .poll-button-group {
   margin-top: 10px;
+  height: 60px;
+  padding-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .poll-background {
@@ -127,6 +134,8 @@ body {
   background: white;
   width: 400px;
   height: 400px;
+  box-shadow: 3px 0px 1px $primary-color-dark;
+  border-radius: 3px 3px;
 }
 
 .poll {

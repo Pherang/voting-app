@@ -13,8 +13,8 @@
           >
         </PollChart>
       </div>
-      <h2 v-html="poll.question"></h2>
       <form @submit.prevent="submit">
+        <h2 v-html="poll.question"></h2>
         <div v-for="answer in poll.answers">
           <input 
             name="poll._id" 
@@ -45,6 +45,8 @@
           href="#openModal">
           Share Poll
         </a>
+      </div>
+      </form>
       <div id="openModal" class="modalDialog">
         <div>
           <a id="closeModal" 
@@ -56,9 +58,7 @@
           <button type="button" @click="copyLink">Copy Link</button>
         </div>
         </div>
-      </div>
         
-      </form>
     </div> 
   </div>
 </main>    
@@ -227,4 +227,22 @@ export default {
 
 <style lang="scss" scoped>
 @import '../style/main';
+
+h2 {
+  background: white;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+}
+
+form {
+  background: white;
+  margin-top: -4px;
+  padding-left: 10px;
+  box-shadow: 3px 3px 1px $primary-color-dark;
+  border-radius: 0px 0px 3px 3px;
+}
+
 </style>

@@ -9,6 +9,7 @@
   width: 80%;                  
   border: none;                 
   border-radius: 3px;
+  box-shadow: 2px 2px 3px $primary-color-dark-shadow;
 }                              
 
 .base-form {
@@ -23,7 +24,7 @@
 }
 
 .text-field {
-  height: 52px;
+  height: 46px;
   min-width: 200px;
   background: white;
   display: inline-block;
@@ -37,7 +38,7 @@
   padding: 20px 16px 0;
   border: 0;
   font-size: 16px;
-  height: 36px;
+  height: 26px;
   position: absolute;
   border-radius: 5px 5px 0px 0px;
 }
@@ -46,7 +47,7 @@
 .text-field__input:valid + .text-field__label,
 .text-field__input:hover + .text-field__label 
 {
-  top: 10px;
+  top: 4px;
   font-size: 14px;
 }
 
@@ -57,7 +58,7 @@
   color: $secondary-text-color-dark;
   min-width: 200px;
   border: 0;
-  top: 30px;
+  top: 20px;
   position: absolute;
   cursor: text;
   transition: font-size 0.5s, top 0.5s;

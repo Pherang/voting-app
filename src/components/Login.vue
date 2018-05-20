@@ -3,31 +3,77 @@
     <!-- Login Main Content -->
     <form class="base-form" @submit.prevent="submit">
       <h2>{{ title }}</h2>
-      <input 
-        type="text" 
-        name="username" 
-        v-model="username" 
-        placeholder="Username" /><br>
+      <div class="text-field-container">
+        <div class="text-field">
+          <input 
+            class="text-field__input"
+            id="username"
+            type="text" 
+            required="true"
+            name="username" 
+            v-model="username" 
+            >
+          <label class="text-field__label" for="username">
+            Username  
+          </label>
+          </input>
+        </div>
+      </div>
       <template v-if="mode === 'signup'">
-        <input 
-          type="text"
-          name="email" v-model="email"
-          placeholder="Email" /><span v-if="!validEmail"> Please enter a valid email addres</span> <br>
+        <div class="text-field-container">
+          <div class="text-field">
+            <input 
+              id="email"
+              type="text"
+              class="text-field__input"
+              name="email" 
+              v-model="email"
+              required="true">
+              <label class="text-field__label" for="email">
+                Email
+              </label>
+            </div>
+              
+        </div>
+<span v-if="!validEmail"> 
+                Please enter a valid email address
+              </span>
+
       </template>
-      <input
-        type="password"
-        name="password"
-        v-model="password"
-        placeholder="Password" /><br>
+      <div class="text-field-container">
+        <div class="text-field">
+          <input
+            id="password"
+            class="text-field__input"
+            type="password"
+            required="true"
+            name="password"
+            v-model="password">
+            <label for="password" class="text-field__label" >
+              Password
+            </label>
+          </input>
+        </div>
+      </div>
       <template v-if="mode === 'signup'">
-        <input
-          type="password"
-          name="password2"
-          v-model="password2"
-          placeholder="Confirm Password" /><br>
+        <div class="text-field-container">
+          <div class="text-field">
+            <input
+              id="password2"
+              type="password"
+              class="text-field__input"
+              name="password2"
+              v-model="password2"
+              required="true">
+              <label for="password2" class="text-field__label" >
+                Confirm Password
+              </label>
+            </input>
+          </div>
+        </div>
+        <br>
       </template>
       <p v-if="errorMsg">{{ errorMsg }}</p>
-      <br>
       <template v-if="mode ==='login'">
         <button
           class="base-button--small"
@@ -127,7 +173,7 @@ export default {
       })
       let finalResult = await result.json()
 
-      console.log('Signup status: ', finalResult)
+      alert(`Signup status: ${finalResult}`)
     },
     async login () {
       console.log('Loggin in')
