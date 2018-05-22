@@ -2,7 +2,7 @@
   <main>
   <div class="base-form--background">
   <h1>Create a Poll</h1> <section class="base-form">
-    <div class="text-field-container">
+    <div class="text-field-container text-field-container--wide">
       <div class="text-field">
         <input 
           class="text-field__input"
@@ -16,6 +16,9 @@
           </label>
           <div class="text-field__line"></div>
         </input>
+       </div>
+       <div class="status-message-container">
+         <span class="status-message">{{ createStatus }}</span>
        </div>
     </div>
     <div v-for="(answer, index) in answers">
@@ -59,6 +62,7 @@ export default {
       question: '',
       answers: [{ option: ""}, { option: ""} ],
       htmlIds: ["option0","option1"],
+      createStatus: '',
       error: null
     }
   },
@@ -81,6 +85,10 @@ export default {
           this.question = ""
           this.answers = [{ option: ""}, { option: ""} ]
           this.htmlIds = ["option0","option1"]
+          this.createStatus = "Poll Created"
+          // Arrow function used so that this would be in the context
+          // of the Vue instance.
+          setTimeout( () => { console.log('create status blank'); this.createStatus = '' }, 1000)
 
         }
       } catch (err) {
@@ -103,5 +111,20 @@ h1 {
   text-align: center;         
   color: $primary-color-text; 
 }                                 
+
+.text-field-container--wide {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.status-message-container {
+  display: flex;
+  margin-left: 10px;
+}
+
+.status-message {
+  align-self: center; 
+}
 
 </style>

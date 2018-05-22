@@ -13,7 +13,7 @@
           >
         </PollChart>
       </div>
-      <form @submit.prevent="submit">
+      <form class="vote-form" @submit.prevent="submit">
         <h2 v-html="poll.question"></h2>
         <div v-for="answer in poll.answers">
           <input 
@@ -54,8 +54,8 @@
              title="Close" 
              class="close">&times;</a>
           <p>Get your link here!</p>
-          <input :id="this.poll._id" type="text" :value='"http://localhost:8080/poll/"+poll._id'></input>
-          <button type="button" @click="copyLink">Copy Link</button>
+          <input class="modalDialog__text" :id="this.poll._id" type="text" :value='"http://localhost:8080/poll/"+poll._id'></input>
+          <button class="base-button" type="button" @click="copyLink">Copy Link</button>
         </div>
         </div>
         
@@ -152,6 +152,8 @@ export default {
     },
     async deletePoll () {
       console.log('Deleting Poll')
+      let confirmDelete = confirm("Delete Poll? All data will be permanently removed.")
+      if (confirmDelete === true) {
       try {
         const result = await fetch('http://localhost:4040/deletepoll', {
          method: 'POST', 'credentials': 'include',
@@ -166,12 +168,15 @@ export default {
         console.log('Delete result', result)
         if (result.ok) {
           console.log('Poll deleted')
+          alert('Poll deleted')
+          this.$router.go(-1)
         } else {
           throw new Error('error')
         }
       } catch (err) {
         console.log('Delete error: ', err)
       }
+    }
     },
     async copyLink () {
       // A more vanilla JS way of doing this.
@@ -227,6 +232,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../style/main';
+@import '../style/forms';
 
 h2 {
   background: white;
@@ -237,7 +243,7 @@ h2 {
   padding-left: 10px;
 }
 
-form {
+.vote-form {
   background: white;
   margin-top: -4px;
   padding-left: 10px;

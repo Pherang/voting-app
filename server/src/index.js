@@ -15,7 +15,6 @@ const corsOptions = {
   credentials: true
 }
 
-
 require('./authsetup.js') // Setup passport
 
 const routes = require('./routes.js')
@@ -40,7 +39,6 @@ app.use(session({
     secure: false //process.env.NODE_ENV === 'production' //true if prod
   },
 }), (req,res,next) => { console.log('calling from session init ',req.session); next();}   )
-
 
 app.use(passport.initialize(), (req,res,next) => { console.log('calling from passport initialize init ',req.session); next();}   )
 app.use(passport.session(), (req,res,next) => { console.log('calling from passport.session init ',req.session); next();}   )

@@ -33,11 +33,10 @@
                 Email
               </label>
             </div>
-              
         </div>
-<span v-if="!validEmail"> 
-                Please enter a valid email address
-              </span>
+        <span v-if="!validEmail"> 
+          Please enter a valid email address
+        </span>
 
       </template>
       <div class="text-field-container">
@@ -172,8 +171,11 @@ export default {
         })
       })
       let finalResult = await result.json()
-
+      if ((finalResult) == 1) {
+        finalResult = "New Account created. Please login"
+      }
       alert(`Signup status: ${finalResult}`)
+      this.$router.replace({ path: '/pollcenter'})
     },
     async login () {
       console.log('Loggin in')

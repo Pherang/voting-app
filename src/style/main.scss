@@ -142,20 +142,6 @@ body {
   background: white;
 }
 
-.modalDialog {                         
-  position: fixed;                     
-  color: white;                        
-  top: 0;                              
-  right: 0;                            
-  bottom: 0;                           
-  left: 0;                             
-  background: rgba(20,0,0,0.8);        
-  z-index: 99999;                      
-  opacity: 0;                          
-  transition: opacity 100ms ease-in;   
-  pointer-events: none;                
-}                                      
-
 .share-button {                          
   @extend %base-button;
   background-color: $primary-color-dark; 
@@ -168,23 +154,44 @@ body {
   background-color: $accent-color;  
 }                                   
 
+.modalDialog {                         
+  position: fixed;                     
+  color: white;                        
+  top: 0;                              
+  right: 0;                            
+  bottom: 0;                           
+  left: 0;                             
+  background: $primary-color-dark;        
+  z-index: 99999;                      
+  opacity: 0;                          
+  transition: opacity 100ms ease-in;   
+  pointer-events: none;                
+}                                      
+
 .modalDialog:target {
-  opacity: 1;
+  opacity: .99;
   pointer-events: auto;
 }
 
+.modalDialog__text {
+  font-size: 16px;
+  height: 26px;
+  background: white;
+  min-width: 400px;
+}
+
 .modalDialog > div {
-  width: 400px;
+  width: 510px;
   position: relative;
   margin: 10% auto;
   padding: 5px 20px 13px 20px;
   border-radius: 10px;
-  background: grey;
+  background: $primary-color;
 }
 
 .close {
-  background: #606061;
-  color: red;
+  background: $primary-color-dark;
+  color: $primary-color-text;
   line-height: 25px;
   position: absolute;
   right: -12px;
