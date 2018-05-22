@@ -17,9 +17,11 @@
           <div class="text-field__line"></div>
         </input>
        </div>
-       <div class="status-message-container">
-         <span class="status-message">{{ createStatus }}</span>
+         <transition name="fade" mode="out-in">
+       <div v-if="createStatus !== ''" class="status-message-container">
+          <span class="status-message">{{ createStatus }}</span>
        </div>
+         </transition>
     </div>
     <div v-for="(answer, index) in answers">
       <div class="text-field-container">
@@ -88,7 +90,7 @@ export default {
           this.createStatus = "Poll Created"
           // Arrow function used so that this would be in the context
           // of the Vue instance.
-          setTimeout( () => { console.log('create status blank'); this.createStatus = '' }, 1000)
+          setTimeout( () => { console.log('create status blank'); this.createStatus = '' }, 3000)
 
         }
       } catch (err) {

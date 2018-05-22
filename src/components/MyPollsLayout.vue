@@ -5,7 +5,9 @@
       <router-link class="base-button" :to="{name: 'my-polls'}" tag="button" exact>My Polls</router-link>
       <router-link class="base-button" :to="{name: 'create-poll'}" tag="button" exact>Create</router-link>
     </div>
-    <router-view />
+    <transition name="fade" mode="out-in">
+      <router-view />
+    </transition>
   </main>    
 </template>
 
