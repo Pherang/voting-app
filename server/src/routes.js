@@ -23,11 +23,7 @@ module.exports.addRoutes = function(app) {
   })
 
   app.get('/getUser', (req,res) => {
-    console.log('Getting session ', req.session)
-    console.log('Getting user ', req.user)
     if (req.user) {
-      console.log("session logged in")
-      console.log(req.user)
       res.json({ 
         _id: req.user._id,
         username: req.user.username 
@@ -60,15 +56,11 @@ module.exports.addRoutes = function(app) {
   })
   
   app.post('/signup', async (req,res) => {
-    console.log(req.body)
     let result = await database.createUser(req.body)
-    console.log('Route result is: ',result)
     res.json(result)
   })
 
   app.post('/login', passport.authenticate('local'), async (req,res) => {
-    console.log('This means authenticate passed')
-    console.log('Login session looks like\n ', req.session)
     res.json({
       _id: req.user._id,
       username: req.user.username
@@ -79,29 +71,19 @@ module.exports.addRoutes = function(app) {
   app.get('/mypolls', privateRoute, 
     async (req,res) => {
       let mypolls = await database.getUserPolls(req.user) 
-      console.log(mypolls)
       res.json(mypolls)
   })
   
   app.post('/createpoll', privateRoute, 
     async (req,res) => {
-      console.log('New Poll ', req.body)
-      console.log('Creator ', req.body.creator)
-      console.log('Requestor ', req.user)
       let result = await database.createPoll(req.body) 
       res.json(result)
   })
 
   app.post('/deletepoll', privateRoute, 
     async (req,res) => {
-      console.log('Delete Poll ', req.body)
-      console.log('Creator ', req.body.creator)
-      console.log('Requestor ', req.user._id)
-      console.log('req is type ',typeof(req.user._id))
-      console.log('creator is type ',typeof(req.body.creator))
       // Need to do a double check if the requestor of the API matches the poll they want to delete
       if (req.user._id == req.body.creator) {
-        console.log('IDs match, processing delete')
         let result = await database.deletePoll(req.body) 
         res.json(result)
       } else {

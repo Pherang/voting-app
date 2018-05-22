@@ -107,7 +107,6 @@ exports.getUserPolls = async function getUserPolls (user) {
   try {
     // Used template literal for user._id. It must be a string
     let query = { creator: `${user._id}` }
-    console.log('query for userpolls is', query)
     let allPollsCursor = await db.collection(polls).find(query)
     // Creator field is passed when this is called
     // by a logged in user.
@@ -121,13 +120,10 @@ exports.getUserPolls = async function getUserPolls (user) {
 exports.createPoll = async function createPoll (poll) {
   try {
    
-    console.log('Poll with votes init ', poll)
-    console.log('poll arr ', poll.answers)
     // Zero the votes for a newly created poll
     for (element in poll.answers) {
       poll.answers[element].votes = 0
     }
-    console.log('poll after modify ', poll.answers)
     let result = await db.collection(polls).insertOne(poll)
     return result  
   } catch (err) {
@@ -140,7 +136,6 @@ exports.deletePoll = async function deletePoll (poll) {
     objId = new ObjectId(poll.pollid)
     let query = ({ _id: objId, creator: poll.creator }) 
     let result = await db.collection(polls).deleteOne(query)
-    console.log(result)
     return result  
   } catch (err) {
     console.log(err.stack)
@@ -173,7 +168,6 @@ exports.getUser = async function getUser (username) {
   try {
     let result = await db.collection(users)
       .findOne({ username: username})
-    console.log(result)
     return result
   } catch (err) {
     console.log(err.stack)
@@ -186,7 +180,6 @@ exports.getUserById = async function getUserById (id) {
     const objId = new ObjectId(id)
     let result = await db.collection(users)
       .findOne({ _id: objId })
-    console.log('database deserialize ', result)
     return result
   } catch (err) {
     console.log(err.stack)
@@ -200,16 +193,13 @@ exports.createUser = async function createUser (user) {
     // if I understand right this module is wrapped in a function 
     // the function is the global content that this refers to
     let existingUser = await this.getUser(user.username)
-    console.log('I found user: ', existingUser)
     if (existingUser) {
       return ('Username exists please try another')
     } else {
       let hashedPassword = await User.hashPassword(user.password)
       user.password = hashedPassword
-      console.log('User object is: ', user)
       let result = await db.collection(users).insertOne(user)
       if (result.insertedCount == 1) {
-        console.log('Success')
         return result.insertedCount
       } else {
         console.log('Error inserting user: ', user.username)

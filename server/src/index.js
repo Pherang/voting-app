@@ -38,7 +38,7 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 1, // one hour cookie
     secure: false //process.env.NODE_ENV === 'production' //true if prod
   },
-}), (req,res,next) => { console.log('calling from session init ',req.session); next();}   )
+}), (req,res,next) => { next() } )
 
 app.use(passport.initialize(), (req,res,next) => { console.log('calling from passport initialize init ',req.session); next();}   )
 app.use(passport.session(), (req,res,next) => { console.log('calling from passport.session init ',req.session); next();}   )
