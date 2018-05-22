@@ -19,8 +19,9 @@
           </input>
         </div>
       </div>
+      <transition-group name="fade">
       <template v-if="mode === 'signup'">
-        <div class="text-field-container">
+        <div class="text-field-container" key="emailcontainer">
           <div class="text-field">
             <input 
               id="email"
@@ -34,11 +35,11 @@
               </label>
             </div>
         </div>
-        <span v-if="!validEmail"> 
+        <span v-if="!validEmail" key="emailspan"> 
           Please enter a valid email address
         </span>
-
       </template>
+      </transition-group>
       <div class="text-field-container">
         <div class="text-field">
           <input
@@ -54,24 +55,26 @@
           </input>
         </div>
       </div>
-      <template v-if="mode === 'signup'">
-        <div class="text-field-container">
-          <div class="text-field">
-            <input
-              id="password2"
-              type="password"
-              class="text-field__input"
-              name="password2"
-              v-model="password2"
-              required="true">
-              <label for="password2" class="text-field__label" >
-                Confirm Password
-              </label>
-            </input>
+      <transition-group appear name="fade">
+        <template v-if="mode === 'signup'" >
+          <div class="text-field-container" key="password2container">
+            <div class="text-field">
+              <input
+                id="password2"
+                type="password"
+                class="text-field__input"
+                name="password2"
+                v-model="password2"
+                required="true">
+                <label for="password2" class="text-field__label" >
+                  Confirm Password
+                </label>
+              </input>
+            </div>
           </div>
-        </div>
-        <br>
-      </template>
+          <br key="password2br">
+        </template>
+      </transition-group>
       <p v-if="errorMsg">{{ errorMsg }}</p>
       <template v-if="mode ==='login'">
         <button
@@ -211,4 +214,5 @@ export default {
 
 <style lang="scss" scoped>
   @import '../style/forms';
+ 
 </style>
