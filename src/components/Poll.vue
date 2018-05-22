@@ -82,6 +82,9 @@ export default {
             ticks: {
               beginAtZero: true
             }
+          }],
+          xAxes: [{
+            barPercentage: 0.7,
           }]
         }
       },
@@ -216,8 +219,10 @@ export default {
           datasets: [
             {
               label: this.poll.question,
-              backgroundColor: ['red','blue'],
-              data: this.chartVotes
+              backgroundColor: ['#f44336','#2196f3','#4caf50','#ffeb3b'],
+              data: this.chartVotes,
+              borderColor: '#8c7b75',
+              borderWidth: 1
             }
           ]
         }
