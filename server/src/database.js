@@ -20,10 +20,8 @@ let dbName = 'votingapp'
 // for subsequent queries
 MongoClient.connect(uri, async function (err, client) {
   if (err) {
-    console.log("No connection to db!")
     return null
   }
-  console.log("Connected to DB server")
   
   db = await client.db(dbName) 
   // call this to initialize data if there isn't any
@@ -65,7 +63,6 @@ async function initPolls () {
   try {
     let result = await db.collection(polls).insertMany([poll1,poll2,poll3,poll4])
   } catch(err) {
-    console.log(err.stack)
   }
 
 }
@@ -81,13 +78,11 @@ exports.getPolls = async function getPolls () {
     allPollsCursor.project({ _id: 1, question: 1})
     return (await allPollsCursor.toArray())
   } catch (err) {
-    console.log(err.stack)
   }
 }
 
 exports.getOnePoll = async function getOnePoll (pollId) {
   try { 
-    console.log('Database is finding poll..', pollId)
     objId = new ObjectId(pollId)
     let query = { _id: objId}
     let pollCursor = await db.collection(polls).find(query)
@@ -97,7 +92,6 @@ exports.getOnePoll = async function getOnePoll (pollId) {
     // pollCursor.project({ creator: 1})
     return (await pollCursor.next())
   } catch (err) {
-    console.log(err.stack)
   }
 }
 
@@ -107,31 +101,25 @@ exports.getUserPolls = async function getUserPolls (user) {
   try {
     // Used template literal for user._id. It must be a string
     let query = { creator: `${user._id}` }
-    console.log('query for userpolls is', query)
     let allPollsCursor = await db.collection(polls).find(query)
     // Creator field is passed when this is called
     // by a logged in user.
     //allPollsCursor.project({ creator: 0})
     return (await allPollsCursor.toArray())
   } catch (err) {
-    console.log(err.stack)
   }
 }
 
 exports.createPoll = async function createPoll (poll) {
   try {
    
-    console.log('Poll with votes init ', poll)
-    console.log('poll arr ', poll.answers)
     // Zero the votes for a newly created poll
     for (element in poll.answers) {
       poll.answers[element].votes = 0
     }
-    console.log('poll after modify ', poll.answers)
     let result = await db.collection(polls).insertOne(poll)
     return result  
   } catch (err) {
-    console.log(err.stack)
   }
 }
 
@@ -140,10 +128,8 @@ exports.deletePoll = async function deletePoll (poll) {
     objId = new ObjectId(poll.pollid)
     let query = ({ _id: objId, creator: poll.creator }) 
     let result = await db.collection(polls).deleteOne(query)
-    console.log(result)
     return result  
   } catch (err) {
-    console.log(err.stack)
   }
 }
 
@@ -160,12 +146,9 @@ exports.submitVote = async function submitVote (poll) {
     let result = await db.collection(polls).updateOne( filter, update )
 
     if (result.modifiedCount > 0) {
-      console.log('Poll updated')
     } else {
-      console.log('No update done')
     }
   } catch (err) {
-    console.log("ERROR: ", err)
   }
 }
 
@@ -173,10 +156,8 @@ exports.getUser = async function getUser (username) {
   try {
     let result = await db.collection(users)
       .findOne({ username: username})
-    console.log(result)
     return result
   } catch (err) {
-    console.log(err.stack)
     return err
   }
 }
@@ -186,10 +167,8 @@ exports.getUserById = async function getUserById (id) {
     const objId = new ObjectId(id)
     let result = await db.collection(users)
       .findOne({ _id: objId })
-    console.log('database deserialize ', result)
     return result
   } catch (err) {
-    console.log(err.stack)
     return err
   }
 }
@@ -200,23 +179,18 @@ exports.createUser = async function createUser (user) {
     // if I understand right this module is wrapped in a function 
     // the function is the global content that this refers to
     let existingUser = await this.getUser(user.username)
-    console.log('I found user: ', existingUser)
     if (existingUser) {
       return ('Username exists please try another')
     } else {
       let hashedPassword = await User.hashPassword(user.password)
       user.password = hashedPassword
-      console.log('User object is: ', user)
       let result = await db.collection(users).insertOne(user)
       if (result.insertedCount == 1) {
-        console.log('Success')
         return result.insertedCount
       } else {
-        console.log('Error inserting user: ', user.username)
         return 'Error creating user'
       }
     }
   } catch (err) {
-    console.log(err.stack)
   }
 }

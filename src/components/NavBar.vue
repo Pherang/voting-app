@@ -39,12 +39,10 @@ export default {
   methods: {
     async logout () {
       const result = await fetch('http://localhost:4040/logout', { 'credentials': 'include'} )
-      console.log('Logout clicked')
       let x = await result.json()
       if (x.status  === 'roger') {
         this.$state.user = null
         this.$router.replace( { name: 'polls'})
-        console.log('This should work')
       }
     }
   }

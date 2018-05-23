@@ -113,7 +113,6 @@ export default {
     },
     async findPoll() {
     
-    console.log('Vue Instance is ', this)
       if (this.id) {
         try {
           let result = await fetch(`http://localhost:4040/poll/${this.id}`,{ "credentials": "true" })  
@@ -125,7 +124,6 @@ export default {
             alert("No Poll Found")
           }
         } catch (err) {
-          console.log(err)
         }
       }
     },
@@ -143,18 +141,15 @@ export default {
         })
 
         if (result.ok) {
-          console.log('Vote submitted')
           this.voted = true;
           this.findPoll()
         } else {
           throw new Error('error')
         }
       } catch (err) {
-        console.log('Vote error: ', err)
       }
     },
     async deletePoll () {
-      console.log('Deleting Poll')
       let confirmDelete = confirm("Delete Poll? All data will be permanently removed.")
       if (confirmDelete === true) {
       try {
@@ -168,16 +163,13 @@ export default {
             creator: this.poll.creator,
          })
         })
-        console.log('Delete result', result)
         if (result.ok) {
-          console.log('Poll deleted')
           alert('Poll deleted')
           this.$router.go(-1)
         } else {
           throw new Error('error')
         }
       } catch (err) {
-        console.log('Delete error: ', err)
       }
     }
     },
@@ -193,18 +185,12 @@ export default {
       alert("Link copied to clipboard \n " + copyText.value)
     },
     setupChartData () {
-      console.log('The default chart is ', this.$data.chartData)
       // Need to zero these arrays everytime we update the chart data.
       this.chartQuestions = []
       this.chartVotes = []
       this.poll.answers.forEach( function(element) {
-        console.log('What is THIS inside forEach ', this)
-        console.log('Answers are ', element)
-        console.log(element.option)
         this.chartQuestions.push(element.option)
-        console.log('After question push ', this.chartQuestions)
         this.chartVotes.push(element.votes)
-        console.log('After votes push ', this.chartVotes)
 
       },this) // Passing the vue instance to forEach.
 
