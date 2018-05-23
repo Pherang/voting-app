@@ -1,47 +1,108 @@
 <template>
-  <div class="loginsignup">
+  <div class="base-form--background">
     <!-- Login Main Content -->
-    <form @submit.prevent="submit">
+    <form class="base-form" @submit.prevent="submit">
       <h2>{{ title }}</h2>
-      <input 
-        type="text" 
-        name="username" 
-        v-model="username" 
-        placeholder="Username" /><br>
+      <div class="text-field-container">
+        <div class="text-field">
+          <input 
+            class="text-field__input"
+            id="username"
+            type="text" 
+            required="true"
+            name="username" 
+            v-model="username" 
+            >
+          <label class="text-field__label" for="username">
+            Username  
+          </label>
+          </input>
+        </div>
+      </div>
+      <transition-group name="fade">
       <template v-if="mode === 'signup'">
-        <input 
-          type="text"
-          name="email" v-model="email"
-          placeholder="Email" /><span v-if="!validEmail"> Please enter a valid email addres</span> <br>
+        <div class="text-field-container" key="emailcontainer">
+          <div class="text-field">
+            <input 
+              id="email"
+              type="text"
+              class="text-field__input"
+              name="email" 
+              v-model="email"
+              required="true">
+              <label class="text-field__label" for="email">
+                Email
+              </label>
+            </div>
+        </div>
+        <span v-if="!validEmail" key="emailspan"> 
+          Please enter a valid email address
+        </span>
       </template>
-      <input
-        type="password"
-        name="password"
-        v-model="password"
-        placeholder="Password" /><br>
-      <template v-if="mode === 'signup'">
-        <input
-          type="password"
-          name="password2"
-          v-model="password2"
-          placeholder="Confirm Password" /><br>
-      </template>
-      <br>
+      </transition-group>
+      <div class="text-field-container">
+        <div class="text-field">
+          <input
+            id="password"
+            class="text-field__input"
+            type="password"
+            required="true"
+            name="password"
+            v-model="password">
+            <label for="password" class="text-field__label" >
+              Password
+            </label>
+          </input>
+        </div>
+      </div>
+      <transition-group appear name="fade">
+        <template v-if="mode === 'signup'" >
+          <div class="text-field-container" key="password2container">
+            <div class="text-field">
+              <input
+                id="password2"
+                type="password"
+                class="text-field__input"
+                name="password2"
+                v-model="password2"
+                required="true">
+                <label for="password2" class="text-field__label" >
+                  Confirm Password
+                </label>
+              </input>
+            </div>
+          </div>
+          <br key="password2br">
+        </template>
+      </transition-group>
+      <p v-if="errorMsg">{{ errorMsg }}</p>
       <template v-if="mode ==='login'">
         <button
+          class="base-button--small"
           type="button"
           @click="mode ='signup'">
           Create Account
         </button>
-        <button type="submit" :disabled="!validLogin" >Login</button>
+        <button 
+          class="base-button--small"
+          type="submit" 
+          :disabled="!validLogin" >
+          Login
+        </button>
       </template>
       <template v-if="mode ==='signup'">
         <button
+          class="base-button--small"
           type="button"
           @click="mode ='login'">
           Log in
         </button>
-        <button type="submit" :disabled="!validSignup">Signup</button>
+        <button 
+          class="base-button--small"
+          type="submit" 
+          :disabled="!validSignup">
+          Signup
+        </button>
       </template>
     </form>
   </div>    
@@ -56,6 +117,7 @@ export default {
       email: '',
       password: '',
       password2: '',
+      errorMsg: ''
     }
   },
   computed: {
@@ -111,7 +173,12 @@ export default {
           password: this.password
         })
       })
-      console.log('Signup status: ', await result.json())
+      let finalResult = await result.json()
+      if ((finalResult) == 1) {
+        finalResult = "New Account created. Please login"
+      }
+      alert(`Signup status: ${finalResult}`)
+      this.$router.replace({ path: '/pollcenter'})
     },
     async login () {
       console.log('Loggin in')
@@ -145,21 +212,7 @@ export default {
 }
 </script>
 
-<style scoped>
-
-.loginsignup {
-  margin:auto;
-  margin-top:10%;
-  padding: 1%;
-  background-color: lightblue;
-  width: 80%;
-  border: 1px;
-
-}
-
-form {
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-top: 5%;
-}
+<style lang="scss" scoped>
+  @import '../style/forms';
+ 
 </style>

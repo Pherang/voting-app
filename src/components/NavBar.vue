@@ -1,17 +1,39 @@
 <template>
+  <div class="nav-bar-scroll">
   <nav class="navbar">
+    <router-link 
+      class="router-link--logo" 
+      :to="{name: 'polls'}" exact>
+      <span class="logo">Votetastic</span>
+      </router-link>
     <!-- Navigation Links. router-link components -->
-    <router-link :to="{name: 'polls'}" exact>Polls</router-link>
-    <router-link to="/pollcenter" exact>MyPolls</router-link>
+    <router-link 
+      class="router-link--custom" 
+      :to="{name: 'polls'}" 
+      exact>
+      Polls
+    </router-link>
+    <router-link 
+      class="router-link--custom" 
+      to="/pollcenter" 
+      exact>
+      MyPolls
+    </router-link>
     <div class="spacer"></div>
     <template v-if="$state.user">
       <a>{{ $state.user.username }} </a>&nbsp;
-      <a @click="logout">Logout</a>
+      <a class="nav-bar__logout-button"i @click="logout">Logout</a>
     </template>
-    <router-link v-else :to="{name: 'login'}" exact>Login</router-link>
+    <router-link 
+      class="router-link--custom" 
+      v-else 
+      :to="{name: 'login'}" 
+      exact>
+      Login
+    </router-link>
   </nav>    
-</template>
-
+  </div>
+</template> 
 <script>
 export default {
   methods: {
@@ -29,20 +51,6 @@ export default {
 }
 </script>
 
-<style>
-
-.navbar {
-  display: flex;
-  justify-content: space-around;
-  width: 90%;
-}
-
-.spacer {
-  flex: 100%;
-}
-
-.router-link-active {
-  border-bottom-color: red;
-}
-
+<style lang="scss" scoped>
+  @import '../style/nav-bar.scss';
 </style>
