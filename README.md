@@ -1,6 +1,6 @@
 # voting-app-vuejs
 
-A voting app created with Vue.js for the FreeCodeCamp.org challenge.
+A voting app created with Vue.js for a FreeCodeCamp.org challenge.
 
 * Built using MongoDB, Express, Vue.js, and Node.
 * Authenticates using passport.js
@@ -11,4 +11,4 @@ A voting app created with Vue.js for the FreeCodeCamp.org challenge.
 
 Hosted on Heroku at https://votetastic.herokuapp.com
 
-
+You can use the following to test the app: *joe/abc
