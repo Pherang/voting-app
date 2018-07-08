@@ -27,7 +27,7 @@ export default {
   },
   async created () {
     try {
-      const response = await fetch('http://localhost:4040/mypolls', {
+      const response = await fetch('http://vabe.herokuapp.com/mypolls', {
           'credentials': 'include'
         })
       if (response.ok) {

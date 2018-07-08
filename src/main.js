@@ -13,7 +13,7 @@ async function main () {
 
 // When reloading page/app try to get user from session
   try {
-   let result  = await fetch('http://localhost:4040/getUser', {
+   let result  = await fetch('http://vabe.herokuapp.com/getUser', {
       headers: {
         'Content-type': 'application/json',
       },
