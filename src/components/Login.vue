@@ -162,7 +162,7 @@ export default {
     async signup () {
       console.log('Signing up')
       // Need to call fetch and send username, email, password
-      let result = await fetch('http://vabe.herokuapp.com/signup', {
+      let result = await fetch('https://vabe.herokuapp.com/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -182,7 +182,7 @@ export default {
     },
     async login () {
       console.log('Loggin in')
-        let result = await fetch('http://vabe.herokuapp.com/login', {
+        let result = await fetch('https://vabe.herokuapp.com/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

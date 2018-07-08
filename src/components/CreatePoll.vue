@@ -71,7 +71,7 @@ export default {
   methods: {
     async createPoll () {
       try {
-      let result = await fetch('http://vabe.herokuapp.com/createpoll', {
+      let result = await fetch('https://vabe.herokuapp.com/createpoll', {
         'credentials': 'include',
         method: 'POST',
         headers: {
