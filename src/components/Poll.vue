@@ -54,7 +54,7 @@
              title="Close" 
              class="close">&times;</a>
           <p>Get your link here!</p>
-          <input class="modalDialog__text" :id="this.poll._id" type="text" :value='"http://localhost:8080/poll/"+poll._id'></input>
+          <input class="modalDialog__text" :id="this.poll._id" type="text" :value='"http://votetastic.herokuapp.com/poll/"+poll._id'></input>
           <button class="base-button" type="button" @click="copyLink">Copy Link</button>
         </div>
         </div>
@@ -116,7 +116,7 @@ export default {
     console.log('Vue Instance is ', this)
       if (this.id) {
         try {
-          let result = await fetch(`http://localhost:4040/poll/${this.id}`,{ "credentials": "true" })  
+          let result = await fetch(`http://vabe.votastic.com/poll/${this.id}`,{ "credentials": "include" })  
           if (result.ok) {
             this.poll = await result.json()
             this.findOwner()
@@ -131,7 +131,7 @@ export default {
     },
     async submit () {
       try {
-        const result = await fetch('http://localhost:4040/vote', {
+        const result = await fetch('http://vabe.votastic.com/vote', {
          method: 'POST',
          headers: {
           'Content-Type': 'application/json'
@@ -158,7 +158,7 @@ export default {
       let confirmDelete = confirm("Delete Poll? All data will be permanently removed.")
       if (confirmDelete === true) {
       try {
-        const result = await fetch('http://localhost:4040/deletepoll', {
+        const result = await fetch('http://vabe.herokuapp.com/deletepoll', {
          method: 'POST', 'credentials': 'include',
          headers: {
           'Content-Type': 'application/json'
