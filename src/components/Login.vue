@@ -160,7 +160,6 @@ export default {
       }
     },
     async signup () {
-      console.log('Signing up')
       // Need to call fetch and send username, email, password
       let result = await fetch('https://vabe.herokuapp.com/signup', {
         method: 'POST',
@@ -181,7 +180,6 @@ export default {
       this.$router.replace({ path: '/pollcenter'})
     },
     async login () {
-      console.log('Loggin in')
         let result = await fetch('https://vabe.herokuapp.com/login', {
           method: 'POST',
           headers: {
@@ -194,11 +192,9 @@ export default {
           })
         })
 
-        console.log(result.status)
         switch (result.status) {
           case 200: 
             this.$state.user = await result.json()
-            console.log("Allo ", this.$state.user)
             this.$router.replace({ path: '/pollcenter'})
             break
           case 401: 

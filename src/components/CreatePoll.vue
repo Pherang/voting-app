@@ -90,12 +90,11 @@ export default {
           this.createStatus = "Poll Created"
           // Arrow function used so that this would be in the context
           // of the Vue instance.
-          setTimeout( () => { console.log('create status blank'); this.createStatus = '' }, 3000)
+          setTimeout( () => { this.createStatus = '' }, 3000)
 
         }
       } catch (err) {
         alert("Error is " + err)
-        console.log(err)
       }
     },
     async addOption () {
