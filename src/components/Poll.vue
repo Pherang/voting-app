@@ -116,7 +116,7 @@ export default {
     console.log('Vue Instance is ', this)
       if (this.id) {
         try {
-          let result = await fetch(`http://vabe.votastic.com/poll/${this.id}`,{ "credentials": "include" })  
+          let result = await fetch(`http://vabe.herokuapp.com/poll/${this.id}`,{ "credentials": "include" })  
           if (result.ok) {
             this.poll = await result.json()
             this.findOwner()
@@ -131,7 +131,7 @@ export default {
     },
     async submit () {
       try {
-        const result = await fetch('http://vabe.votastic.com/vote', {
+        const result = await fetch('http://vabe.herokuapp.com/vote', {
          method: 'POST',
          headers: {
           'Content-Type': 'application/json'
