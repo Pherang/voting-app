@@ -11,4 +11,4 @@ A voting app created with Vue.js for a FreeCodeCamp.org challenge.
 
 Hosted on Heroku at https://votetastic.herokuapp.com
 
-You can use the following to test the app: *joe/abc
+You can use the following to test the app: *joe/abc*
